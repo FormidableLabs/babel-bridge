@@ -2,8 +2,7 @@
 
 This is a small experiment to see how we can use Sanity to manage translations for a React app.
 
-<details>
-<summary>Click here to see a rough diagram of how this should work</summary>
+Here is a rough diagram of how this should work:
 
 ```mermaid
 flowchart TD
@@ -16,8 +15,6 @@ flowchart TD
         UpdateDocument --> ReturnDocument[Serve it back to the client]
     end
 ```
-
-</details>
 
 ## MVP
 
