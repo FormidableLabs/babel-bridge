@@ -10,5 +10,8 @@
   "scripts": {
     "start": "bun run index.ts"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@sanity/client": "^6.4.11"
+  }
 }
