@@ -1,0 +1,17 @@
+{
+  "name": "server",
+  "module": "index.ts",
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "start": "bun run index.ts"
+  },
+  "type": "module",
+  "dependencies": {
+    "@sanity/client": "^6.4.11"
+  }
+}
