@@ -1,4 +1,5 @@
 import OpenAI from 'openai';
+import { extractJSON } from './utils';
 
 const DEFAULT_CLIENT_LANGUAGE = 'mi-NZ';
 const PROMPT_TEMPLATE = `The following JSON represents a document in Sanity, written in en-US.
@@ -17,5 +18,5 @@ export const translate = async (document: any) => {
     model: 'gpt-3.5-turbo',
   });
 
-  return response.choices[0].message.content ?? '';
+  return extractJSON(response.choices[0].message.content);
 };
