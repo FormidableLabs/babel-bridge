@@ -3,14 +3,17 @@
   "module": "index.ts",
   "devDependencies": {
     "@types/express": "^4.17.17",
-    "bun-types": "latest"
+    "@types/jest": "^29.5.4",
+    "bun-types": "latest",
+    "jest": "^29.7.0"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
   "scripts": {
     "start": "bun run index.ts",
-    "dev": "bun run --watch index.ts"
+    "dev": "bun run --watch index.ts",
+    "test": "jest"
   },
   "type": "module",
   "dependencies": {
