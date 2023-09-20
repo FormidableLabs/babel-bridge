@@ -54,7 +54,7 @@ describe('extractJSON', () => {
   it('should return null if no JSON is found', () => {
     const input = `Hello, no JSON here. Thank you!`;
     const result = extractJSON(input);
-    expect(result).toEqual(null);
+    expect(result).toBeNull();
   });
 
   it('should return null for invalid JSON', () => {
