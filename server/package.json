@@ -5,7 +5,8 @@
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.4",
     "bun-types": "latest",
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -13,12 +14,17 @@
   "scripts": {
     "start": "bun run index.ts",
     "dev": "bun run --watch index.ts",
-    "test": "jest"
+    "test": "bun test",
+    "test:watch": "bun run test --watch"
   },
   "type": "module",
   "dependencies": {
     "@sanity/client": "^6.4.11",
     "express": "^4.18.2",
     "openai": "^4.6.0"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
   }
 }
