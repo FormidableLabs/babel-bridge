@@ -1,6 +1,7 @@
 import express from 'express';
 
 import { getDocumentCount, getPost, getPosts } from './contentQueries';
+import { translate } from './translation';
 
 const router = express.Router();
 
@@ -26,7 +27,8 @@ router.get('/posts/:slug', (req, res) => {
   const { slug } = req.params;
 
   getPost(slug)
-    .then(post => res.json(post))
+    .then(post => translate(post))
+    .then(content => res.json(content))
     .catch(err => res.status(500).send(err.message));
 });
 
