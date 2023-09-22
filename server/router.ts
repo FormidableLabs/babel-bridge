@@ -1,35 +1,30 @@
-import express from 'express';
+import { Elysia } from 'elysia';
 
 import { getDocumentCount, getPost, getPosts } from './contentQueries';
+import { getLocale } from './utils';
 import { translate } from './translation';
 
-const router = express.Router();
+const router = new Elysia()
+  .get('/', async req => {
+    console.info('GET /api');
 
-router.get('/', (_req, res) => {
-  console.log('GET /');
+    const locale = getLocale(req.headers);
+    const count = await getDocumentCount();
 
-  getDocumentCount()
-    .then(count => res.send(`There are ${count} documents available.`))
-    .catch(err => res.status(500).send(err.message));
-});
+    return `Locale: ${locale}\nThere are ${count} documents available.`;
+  })
+  .get('/posts', async () => {
+    console.info('GET /api/posts');
 
-router.get('/posts', (_req, res) => {
-  console.log('GET /posts');
+    return await getPosts();
+  })
+  .get('/posts/:slug', async req => {
+    const { slug } = req.params;
 
-  getPosts()
-    .then(posts => res.json(posts))
-    .catch(err => res.status(500).send(err.message));
-});
+    console.info(`GET /api/posts/${slug}`);
 
-router.get('/posts/:slug', (req, res) => {
-  console.log('GET /posts/:slug');
-
-  const { slug } = req.params;
-
-  getPost(slug)
-    .then(post => translate(post))
-    .then(content => res.json(content))
-    .catch(err => res.status(500).send(err.message));
-});
+    const post = await getPost(slug);
+    return await translate(post);
+  });
 
 export default router;
