@@ -20,11 +20,12 @@ const router = new Elysia()
   })
   .get('/posts/:slug', async req => {
     const { slug } = req.params;
+    const locale = getLocale(req.headers);
 
     console.info(`GET /api/posts/${slug}`);
 
     const post = await getPost(slug);
-    return await translate(post);
+    return await translate(post, locale);
   });
 
 export default router;
