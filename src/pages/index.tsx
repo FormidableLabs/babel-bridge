@@ -1,10 +1,9 @@
-import { useLoaderData } from "react-router-dom";
-import { BlogList } from "../components/BlogList";
-import { Posts } from "../groqd/post/getPosts";
+import { useLoaderData } from 'react-router-dom';
+import { BlogList } from '../components/BlogList';
 
 export default function HomePage() {
   const data = useLoaderData() as {
-    posts: Posts;
+    posts: any[];
   };
   const posts = data.posts;
   return (

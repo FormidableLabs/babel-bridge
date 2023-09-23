@@ -1,23 +1,31 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import HomePage from "./pages";
-import PostPage from "./pages/[slug]";
-import { runQuery } from "./groqd/runQuery";
-import { getPostsQuery } from "./groqd/post/getPosts";
-import { getPostBySlug } from "./groqd/post/getPostBySlug";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import HomePage from './pages';
+import PostPage from './pages/[slug]';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     loader: async () => {
-      const posts = await runQuery(getPostsQuery);
+      const posts = await fetch('http://localhost:3000/posts')
+        .then((res) => res.json())
+        .catch((error) => {
+          console.log(error);
+          return [];
+        });
+      console.log('posts', posts);
       return { posts };
     },
     Component: HomePage,
   },
   {
-    path: "/:slug",
+    path: '/:slug',
     loader: async ({ params }) => {
-      const post = await runQuery(getPostBySlug, { slug: params.slug });
+      const post = await fetch(`http://localhost:3000/posts/${params.slug}`)
+        .then((res) => res.json())
+        .catch((error) => {
+          console.log(error);
+          return null;
+        });
       return { post };
     },
     Component: PostPage,

@@ -1,8 +1,7 @@
-import { type Posts } from "../groqd/post/getPosts";
-import { BlogListItem } from "./BlogListItem";
+import { BlogListItem } from './BlogListItem';
 
 type BlogListProps = {
-  items: Posts;
+  items: any[];
 };
 
 export const BlogList = (props: BlogListProps) => {
