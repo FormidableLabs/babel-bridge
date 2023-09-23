@@ -11,7 +11,7 @@ const router = new Elysia()
     const locale = getLocale(req.headers);
     const count = await getDocumentCount();
 
-    return `Locale: ${locale}\nThere are ${count} documents available.`;
+    return `Locale: ${locale}\nThere are ${count.published} published documents and ${count.drafts} drafts available.`;
   })
   .get('/posts', async () => {
     console.info('GET /api/posts');
