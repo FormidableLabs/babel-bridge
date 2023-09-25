@@ -13,11 +13,17 @@ export default function PostPage() {
       <Link to="/" className="block mb-4">
         🔙
       </Link>
-      <h1 className="text-4xl font-bold mb-6">{post?.title}</h1>
-      <h2 className="text-xl font-semibold mb-4 italic">
-        Author: {post?.author}
-      </h2>
-      <PortableText value={post?.body} />
+      <article>
+        <header>
+          <h1 className="text-4xl font-bold mb-6">{post.title}</h1>
+          <h2 className="text-xl font-semibold italic">
+            Author: {post.author}
+          </h2>
+        </header>
+        <section>
+          <PortableText value={post.body} />
+        </section>
+      </article>
     </div>
   );
 }
