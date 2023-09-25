@@ -2,7 +2,6 @@
   "name": "server",
   "module": "index.ts",
   "devDependencies": {
-    "@types/express": "^4.17.17",
     "@types/jest": "^29.5.4",
     "bun-types": "latest",
     "jest": "^29.7.0",
@@ -13,14 +12,17 @@
   },
   "scripts": {
     "start": "bun run index.ts",
-    "dev": "bun run --watch index.ts",
+    "dev": "bun run --hot index.ts",
     "test": "bun test",
-    "test:watch": "bun run test --watch"
+    "test:watch": "bun run test --watch",
+    "jest": "jest",
+    "jest:watch": "jest --watch"
   },
   "type": "module",
   "dependencies": {
+    "@elysiajs/cors": "^0.7.0",
     "@sanity/client": "^6.4.11",
-    "express": "^4.18.2",
+    "elysia": "^0.7.9",
     "openai": "^4.6.0"
   },
   "jest": {

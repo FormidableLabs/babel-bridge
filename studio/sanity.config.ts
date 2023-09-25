@@ -10,10 +10,7 @@ const supportedLanguages = [
   {id: 'mi_NZ', title: 'Māori'}
 ]
 
-export default defineConfig({
-  name: 'default',
-  title: 'translations-experiment',
-
+const baseConfig = {
   projectId: 'hakfgcdn',
   dataset: 'development',
 
@@ -27,8 +24,20 @@ export default defineConfig({
       weakReferences: true
     }),
   ],
+  schema: {types: schemaTypes},
+}
 
-  schema: {
-    types: schemaTypes,
+export default defineConfig([
+  {
+    ...baseConfig,
+    name: 'development',
+    dataset: 'development',
+    basePath: '/dev',
   },
-})
+  {
+    ...baseConfig,
+    name: 'staging',
+    dataset: 'staging',
+    basePath: '/staging',
+  },
+])
