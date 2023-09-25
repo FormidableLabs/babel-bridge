@@ -13,6 +13,10 @@ const openai = new OpenAI();
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const translate = async (document: any, locale: string) => {
+  if (locale.startsWith('en')) return document;
+
+  console.log(`Translating ${document.slug.current} to ${locale}...`);
+
   const prompt = getPrompt(locale, JSON.stringify(document));
 
   const response = await openai.chat.completions.create({
