@@ -9,7 +9,7 @@ export const BlogList = (props: BlogListProps) => {
   if (!items || items.length === 0) return null;
   return (
     <ul>
-      {items.map((item) => {
+      {items.map(item => {
         return <BlogListItem key={item._id} {...item} />;
       })}
     </ul>

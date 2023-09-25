@@ -37,7 +37,7 @@ describe.skip('translate function', () => {
   it('should handle API errors gracefully', async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (openaiInstance.chat.completions.create as any).mockRejectedValue(
-      new Error('API Error')
+      new Error('API Error'),
     );
 
     await expect(translate({})).rejects.toThrow('API Error');

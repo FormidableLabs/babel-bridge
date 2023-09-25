@@ -24,11 +24,11 @@ flowchart TD
 1. :globe_with_meridians: As a content manager, I want to know that when a user device requests a document in te reo Māori, that the document will automatically be translated for them.
 1. :pencil2: As a content manager, I want to be able to manually edit translated content.
 1. :robot: _(stretch)_ As a content manager, I want to be able to manually trigger the AI-based translation of a document.
-1. :earth_asia: _(stretch)_ As a content manager, I want to be able to update the list of languages that a document can be translated into.
+1. :earth*asia: *(stretch)\_ As a content manager, I want to be able to update the list of languages that a document can be translated into.
 
 ### User
 
-1. :book:  As a user, I want to be able to view a document in my language. If my language is not yet supported, I want to see the document in English.
+1. :book: As a user, I want to be able to view a document in my language. If my language is not yet supported, I want to see the document in English.
 
 ### Developer
 

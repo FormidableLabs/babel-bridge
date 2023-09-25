@@ -1,5 +1,5 @@
-import { PortableText as PortableTextReact } from "@portabletext/react";
-import type { TypedObject } from "@portabletext/types";
+import { PortableText as PortableTextReact } from '@portabletext/react';
+import type { TypedObject } from '@portabletext/types';
 
 type PortableTextProps = {
   value: TypedObject;
