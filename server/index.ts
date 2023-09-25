@@ -1,12 +1,15 @@
-import express from 'express';
+import { Elysia } from 'elysia';
+import { cors } from '@elysiajs/cors';
 
 import router from './router';
 
-const app = express();
-const port = 3000;
+const PORT = 3000;
 
-app.use('/', router);
+const app = new Elysia()
+  .use(cors({ origin: /^http:\/\/localhost:\d+$/ }))
+  .onError(({ error }) => new Response(error.message, { status: 500 }))
+  .group('/api', app => app.use(router))
+  .listen(PORT);
 
-app.listen(port, () => {
-  console.log(`Listening on http://localhost:${port} ...`);
-});
+const origin = `http://${app.server?.hostname}:${app.server?.port}`;
+console.log(`🦊 Elysia is running at ${origin}`);
