@@ -1,9 +1,10 @@
 import { useLoaderData } from 'react-router-dom';
-import { BlogList } from '../components/BlogList';
+
+import { BlogList, BlogListItem } from '../components';
 
 export default function HomePage() {
   const data = useLoaderData() as {
-    posts: any[];
+    posts: BlogListItem[];
   };
   const posts = data.posts;
   return (
