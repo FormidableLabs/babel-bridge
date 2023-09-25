@@ -19,6 +19,12 @@ export default function PostPage() {
           <h2 className="text-xl font-semibold italic">
             Author: {post.author}
           </h2>
+          <h3 className="text-sm font-semibold mb-4 italic">
+            Published:{' '}
+            <time dateTime={post._createdAt}>
+              {new Date(post._createdAt).toDateString()}
+            </time>
+          </h3>
         </header>
         <section>
           <PortableText value={post.body} />

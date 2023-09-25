@@ -9,6 +9,7 @@ export type BlogListItem = {
   };
   author: string;
   body: TypedObject;
+  _createdAt: string;
 };
 
 type BlogListItemProps = BlogListItem;
