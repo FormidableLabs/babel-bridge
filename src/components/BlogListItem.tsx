@@ -1,6 +1,16 @@
+import { TypedObject } from '@portabletext/types';
 import { Link } from 'react-router-dom';
 
-export type BlogListItemProps = any;
+export type BlogListItem = {
+  _id: string;
+  title: string;
+  slug: {
+    current: string;
+  };
+  body: TypedObject;
+};
+
+type BlogListItemProps = BlogListItem;
 
 export const BlogListItem = (props: BlogListItemProps) => {
   const { title, slug } = props;

@@ -1,7 +1,10 @@
-import { BlogListItem } from './BlogListItem';
+import {
+  BlogListItem as BlogListItemComponent,
+  type BlogListItem,
+} from './BlogListItem';
 
 type BlogListProps = {
-  items: any[];
+  items: BlogListItem[];
 };
 
 export const BlogList = (props: BlogListProps) => {
@@ -10,7 +13,7 @@ export const BlogList = (props: BlogListProps) => {
   return (
     <ul>
       {items.map(item => {
-        return <BlogListItem key={item._id} {...item} />;
+        return <BlogListItemComponent key={item._id} {...item} />;
       })}
     </ul>
   );
