@@ -28,7 +28,7 @@ flowchart TD
 
 ### User
 
-1. :book:  As a user, I want to be able to view a document in my language. If my language is not yet supported, I want to see the document in English.
+1. :book: As a user, I want to be able to view a document in my language. If my language is not yet supported, I want to see the document in English.
 
 ### Developer
 

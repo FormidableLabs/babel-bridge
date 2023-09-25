@@ -5,7 +5,7 @@ const excludeDrafts = '!(_id in path("drafts.**"))';
 export const getDocumentCount = async () => {
   const total = await client.fetch<number>(`count(*[_type == "post"])`);
   const published = await client.fetch<number>(
-    `count(*[_type == "post" && ${excludeDrafts}])`
+    `count(*[_type == "post" && ${excludeDrafts}])`,
   );
 
   if (!total) throw new Error('No documents found');
@@ -23,8 +23,11 @@ export const getPosts = async () => {
 
 export const getPost = async (slug: string) => {
   const data = await client.fetch(
-    `*[_type == "post" && slug.current == $slug && ${excludeDrafts}][0]`,
-    { slug }
+    `*[_type == "post" && slug.current == $slug && ${excludeDrafts}][0]{
+      ...,
+      "author": author -> name
+    }`,
+    { slug },
   );
 
   if (!data) throw new Error(`Post not found for slug: ${slug}`);
