@@ -22,7 +22,7 @@ describe('API functions', () => {
 
     it('should handle errors gracefully', async () => {
       (fetch as jest.Mock).mockRejectedValueOnce(
-        new Error('Something went wrong')
+        new Error('Something went wrong'),
       );
 
       const result = await getDocuments();
@@ -44,7 +44,7 @@ describe('API functions', () => {
 
     it('should handle errors gracefully', async () => {
       (fetch as jest.Mock).mockRejectedValueOnce(
-        new Error('Something went wrong')
+        new Error('Something went wrong'),
       );
 
       const result = await getDocumentBySlug('test-post');

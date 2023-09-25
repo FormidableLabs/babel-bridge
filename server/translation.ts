@@ -3,7 +3,7 @@ import { extractJSON } from './utils';
 
 const getPrompt = (
   locale: string,
-  document: string
+  document: string,
 ) => `The following JSON represents a document in Sanity, written in en-US.
 Translate all of the text content (i.e. the values for 'text' and 'title') into ${locale}, so that the translated document is valid JSON with the same structure (and keys) as the original.
 Return just the JSON string in plain text - no formatting, no introductory message or explanation.\n${document}`;
