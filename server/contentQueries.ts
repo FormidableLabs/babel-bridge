@@ -23,7 +23,10 @@ export const getPosts = async () => {
 
 export const getPost = async (slug: string) => {
   const data = await client.fetch(
-    `*[_type == "post" && slug.current == $slug && ${excludeDrafts}][0]`,
+    `*[_type == "post" && slug.current == $slug && ${excludeDrafts}][0]{
+      ...,
+      "author": author -> name
+    }`,
     { slug }
   );
 
