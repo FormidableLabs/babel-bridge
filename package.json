@@ -8,9 +8,9 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "format": "npx prettier --write '**/*.{ts,tsx}'",
-    "test": "npx jest --testPathPattern=src",
-    "test:watch": "npx run test --watch"
+    "format": "pnpx prettier --write '**/*.{ts,tsx}'",
+    "test": "pnpx jest --testPathPattern=src",
+    "test:watch": "pnpx run test --watch"
   },
   "dependencies": {
     "@portabletext/react": "^3.0.7",
@@ -39,7 +39,7 @@
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [
-      "npx prettier --write"
+      "pnpx prettier --write"
     ]
   },
   "jest": {
