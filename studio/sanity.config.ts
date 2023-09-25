@@ -17,4 +17,10 @@ export default defineConfig([
     dataset: 'development',
     basePath: '/dev',
   },
+  {
+    ...baseConfig,
+    name: 'staging',
+    dataset: 'staging',
+    basePath: '/staging',
+  },
 ])
