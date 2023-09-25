@@ -8,7 +8,7 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "format": "npx prettier --write ."
+    "format": "npx prettier --write '**/*.{ts,tsx}'"
   },
   "dependencies": {
     "@portabletext/react": "^3.0.7",
@@ -32,7 +32,7 @@
     "vite": "^4.4.5"
   },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx}": [
+    "**/*.{ts,tsx}": [
       "npx prettier --write"
     ]
   }
