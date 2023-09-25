@@ -19,7 +19,7 @@ export const getPosts = async () => {
 export const getPost = async (slug: string) => {
   const data = await client.fetch(
     `*[_type == "post" && slug.current == $slug][0]`,
-    { slug },
+    { slug }
   );
 
   if (!data) throw new Error(`Post not found for slug: ${slug}`);
