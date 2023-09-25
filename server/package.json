@@ -20,6 +20,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@elysiajs/cors": "^0.7.0",
     "@sanity/client": "^6.4.11",
     "elysia": "^0.7.9",
     "openai": "^4.6.0"
