@@ -3,19 +3,16 @@ import {deskTool} from 'sanity/desk'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemas'
 import { documentInternationalization } from '@sanity/document-internationalization'
-
-// NOTE: these need to be defined 🤔
-const supportedLanguages = [
-  {id: 'en_US', title: 'English (US)'},
-  {id: 'mi_NZ', title: 'Māori'}
-]
+import { supportedLanguages } from './structure/langauages'
+import { structure } from './structure'
 
 const baseConfig = {
   projectId: 'hakfgcdn',
   dataset: 'development',
-
   plugins: [
-    deskTool(),
+    deskTool({
+      structure
+    }),
     visionTool(),
     documentInternationalization({
       supportedLanguages,
