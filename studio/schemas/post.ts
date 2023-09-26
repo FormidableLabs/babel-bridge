@@ -9,6 +9,7 @@ export default defineType({
     {
       name: "content",
       title: "Content",
+      default: true,
     },
     {
       name: "meta",
