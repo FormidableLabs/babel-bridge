@@ -35,3 +35,12 @@ flowchart TD
 ### Developer
 
 1. :hammer_and_wrench: As a developer, I want to be able to request a document from Sanity without having to worry about what language it is in.
+
+## Implementation details
+
+The application follows a simple structure, comprising the following parts:
+
+1. A React Web application: Used to display content.
+1. A RESTful Node.js server: Responsible for requesting content from Sanity or routing through the translation layer when needed.
+1. A translation layer: Utilises OpenAI to translate content.
+1. Sanity studio: Manages the content.
