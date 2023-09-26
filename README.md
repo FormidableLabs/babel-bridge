@@ -46,3 +46,25 @@ The application follows a simple structure, comprising the following parts:
 1. A RESTful Node.js server: Responsible for requesting content from Sanity or routing through the translation layer when needed.
 1. A translation layer: Utilises OpenAI to translate content.
 1. Sanity studio: Manages the content.
+
+## Getting started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/en/download) (`v18.0.0`+)
+- [pnpm](https://pnpm.io/installation) (`v8.7.6`+)
+- [Bun](https://bun.sh) (`v1.0.0`+)
+
+### Installation
+
+1. Clone the repository
+1. Install dependencies
+    1. Web application (`pnpm install`)
+    1. Server (`cd server && bun install`)
+    1. Studio (`cd studio && pnpm install`)
+1. Create an `.env` file according to the `.env.example` file in the `server` directory.
+1. Run the layers you need:
+    1. Web application (`pnpm dev`): http://localhost:5173
+    1. Server (`cd server && bun dev`): http://localhost:3000/api
+    1. Studio (`cd studio && pnpm dev`): http://localhost:3333
+1. Have fun!
