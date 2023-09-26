@@ -1,5 +1,5 @@
 import {StructureResolver} from 'sanity/desk'
-import {supportedLanguages} from './langauages'
+import {supportedLanguages} from './languages'
 
 export const structure: StructureResolver = (S) =>
   S.list()
@@ -59,7 +59,7 @@ export const structure: StructureResolver = (S) =>
                     // Load this pane for existing `post` documents
                     // or new documents that aren't using an initial value template
                     .canHandleIntent(
-                      (intentName, params) => intentName === 'edit' || params.template === `lesson`
+                      (intentName, params) => intentName === 'edit' || params.template === `post`
                     )
                 ),
             ])

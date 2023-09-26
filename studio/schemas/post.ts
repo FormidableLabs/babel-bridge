@@ -10,8 +10,8 @@ export default defineType({
       title: "Content",
     },
     {
-      name: "config",
-      title: "Config",
+      name: "meta",
+      title: "Meta",
     },
   ],
   fields: [
@@ -29,7 +29,8 @@ export default defineType({
         source: 'title',
         maxLength: 96,
       },
-      group: 'config',
+      validation: Rule => Rule.required(),
+      group: 'meta',
     }),
     defineField({
       name: 'author',
@@ -52,13 +53,13 @@ export default defineType({
       title: 'Categories',
       type: 'array',
       of: [{type: 'reference', to: {type: 'category'}}],
-      group: 'config',
+      group: 'meta',
     }),
     defineField({
       name: 'publishedAt',
       title: 'Published at',
       type: 'datetime',
-      group: 'content',
+      group: 'meta',
     }),
     defineField({
       name: 'body',
