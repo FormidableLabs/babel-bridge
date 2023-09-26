@@ -1,6 +1,8 @@
 # Sanity translations experiment
 
-This is a small experiment to see how we can use Sanity to manage translations for a React app.
+This is a small experiment to see how we can use Sanity to manage translations for a React application.
+
+The overarching goal is to simplify the handling of language, making less work for the content team, the developers, and ultimately provide a seamless experience for the user. See the [user stories](#mvp) for more details.
 
 Here is a rough diagram of how this should work:
 
