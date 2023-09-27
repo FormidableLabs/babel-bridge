@@ -19,6 +19,16 @@ export const structure: StructureResolver = (S) =>
           .params({language: defaultLanguage?.id})
         ),
         S.listItem()
+        .title('Supported Languages')
+        .schemaType('supportedLanguages')
+        .child(
+          S.documentList()
+            .id('all-languages')
+            .title('All Languages')
+            .schemaType('supportedLanguages')
+            .filter('_type == "supportedLanguages"')
+        ),
+        S.listItem()
         .title('Authors')
         .schemaType('author')
         .child(
@@ -38,4 +48,4 @@ export const structure: StructureResolver = (S) =>
             .schemaType('category')
             .filter('_type == "category"')
         ),
-    ])
+    ]);
