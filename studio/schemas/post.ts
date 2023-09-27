@@ -75,6 +75,7 @@ export default defineType({
       type: 'string',
       validation: Rule => Rule.required(),
       readOnly: true,
+      group: 'meta',
     })
   ],
 
