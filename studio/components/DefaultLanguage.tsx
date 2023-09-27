@@ -6,7 +6,7 @@ export const DefaultLanguage = (props: FieldProps) => {
 
   const client = useClient({apiVersion: new Date().toISOString().slice(0, 10)});
   const docId = useFormValue(['_id']) as string;
-  const docDefault = useFormValue(['default']) as string;
+  const isDefaultLanguage = useFormValue(['default']) as boolean;
   const [doc, setDoc] = useState<any>();
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export const DefaultLanguage = (props: FieldProps) => {
       <div>{props.renderDefault(props)}</div>
       <Card tone="caution" padding={2} radius={2}>
         <Text size={1} muted>
-          {docDefault ? 'This is the default language' : `The default language is set as ${doc?.id}`}
+          {isDefaultLanguage ? 'This is the default language' : `The default language is set as ${doc?.id}`}
         </Text>
       </Card>
     </Stack>
