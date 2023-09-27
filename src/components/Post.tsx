@@ -1,7 +1,18 @@
-import { type PostListItem } from './PostListItem';
 import { PortableText } from './PortableText';
+import { TypedObject } from '@portabletext/types';
 
-export const Post = (props: { post: PostListItem }) => {
+export type Post = {
+  _id: string;
+  title: string;
+  slug: {
+    current: string;
+  };
+  author: string;
+  body: TypedObject;
+  _createdAt: string;
+};
+
+export const Post = (props: { post: Post }) => {
   const { post } = props;
   return (
     <article>

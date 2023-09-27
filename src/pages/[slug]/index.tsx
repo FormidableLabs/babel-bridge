@@ -1,6 +1,10 @@
 import { useLoaderData, Link, Await } from 'react-router-dom';
 
-import { type PostListItem, Post, PostSkeleton } from '../../components';
+import {
+  type Post as PostListItem,
+  Post,
+  PostSkeleton,
+} from '../../components';
 import { Suspense } from 'react';
 
 export default function PostPage() {
