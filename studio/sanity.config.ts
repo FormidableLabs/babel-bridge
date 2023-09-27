@@ -3,7 +3,6 @@ import {deskTool} from 'sanity/desk'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemas'
 import { documentInternationalization } from '@sanity/document-internationalization'
-import { supportedLanguages } from './structure/languages'
 import { structure } from './structure'
 
 const baseConfig = {
@@ -14,10 +13,10 @@ const baseConfig = {
     }),
     visionTool(),
     documentInternationalization({
-      supportedLanguages,
+      supportedLanguages: (client) => client.fetch(`*[_type == "supportedLanguages"]{id, title}`),
       schemaTypes: ['post'],
       languageField: 'language',
-      weakReferences: true
+      weakReferences: true,
     }),
   ],
   schema: {types: schemaTypes},

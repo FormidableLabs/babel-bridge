@@ -1,7 +1,9 @@
-import {StructureResolver} from 'sanity/desk'
-import {supportedLanguages} from './languages'
+import { StructureResolver } from 'sanity/desk'
 
-const defaultLanguage = supportedLanguages.find((l) => l.default === true);
+// TODO: can this be dynamic?
+const defaultLanguage = {
+  id: 'en-US', title: 'English (US)', default: true
+};
 
 export const structure: StructureResolver = (S) =>
   S.list()
@@ -12,21 +14,11 @@ export const structure: StructureResolver = (S) =>
         .schemaType('post')
         .child(
           S.documentList()
-          .id(defaultLanguage ? defaultLanguage.id : 'all-posts')
+          .id(defaultLanguage.id)
           .title(`${defaultLanguage?.title} Posts`)
           .schemaType('post')
           .filter('_type == "post" && language == $language')
           .params({language: defaultLanguage?.id})
-        ),
-        S.listItem()
-        .title('Supported Languages')
-        .schemaType('supportedLanguages')
-        .child(
-          S.documentList()
-            .id('all-languages')
-            .title('All Languages')
-            .schemaType('supportedLanguages')
-            .filter('_type == "supportedLanguages"')
         ),
         S.listItem()
         .title('Authors')
@@ -47,5 +39,15 @@ export const structure: StructureResolver = (S) =>
             .title('All Categories')
             .schemaType('category')
             .filter('_type == "category"')
+        ),
+        S.listItem()
+        .title('Languages')
+        .schemaType('supportedLanguages')
+        .child(
+          S.documentList()
+            .id('all-languages')
+            .title('All Languages')
+            .schemaType('supportedLanguages')
+            .filter('_type == "supportedLanguages"')
         ),
     ]);

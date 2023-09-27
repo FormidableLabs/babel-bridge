@@ -73,6 +73,7 @@ export default defineType({
     defineField({
       name: 'language',
       type: 'string',
+      validation: Rule => Rule.required(),
       readOnly: true,
     })
   ],

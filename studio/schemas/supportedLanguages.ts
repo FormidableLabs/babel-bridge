@@ -3,7 +3,7 @@ import { DefaultLanguage } from '../components/DefaultLanguage'
 
 export default defineType({
   name: 'supportedLanguages',
-  title: 'Supported Languages',
+  title: 'Languages',
   type: 'document',
   fields: [
     defineField({
