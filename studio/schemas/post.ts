@@ -1,14 +1,27 @@
 import {defineField, defineType} from 'sanity'
+import { uniqueSlugByLanguage } from '../utils/uniqueSlugByLanguage'
 
 export default defineType({
   name: 'post',
   title: 'Post',
   type: 'document',
+  groups: [
+    {
+      name: "content",
+      title: "Content",
+      default: true,
+    },
+    {
+      name: "meta",
+      title: "Meta",
+    },
+  ],
   fields: [
     defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
+      group: 'content',
     }),
     defineField({
       name: 'slug',
@@ -17,13 +30,17 @@ export default defineType({
       options: {
         source: 'title',
         maxLength: 96,
+        isUnique: uniqueSlugByLanguage,
       },
+      group: 'meta',    
+      validation: Rule => Rule.required(),
     }),
     defineField({
       name: 'author',
       title: 'Author',
       type: 'reference',
       to: {type: 'author'},
+      group: 'content',
     }),
     defineField({
       name: 'mainImage',
@@ -32,23 +49,34 @@ export default defineType({
       options: {
         hotspot: true,
       },
+      group: 'content',
     }),
     defineField({
       name: 'categories',
       title: 'Categories',
       type: 'array',
       of: [{type: 'reference', to: {type: 'category'}}],
+      group: 'meta',
     }),
     defineField({
       name: 'publishedAt',
       title: 'Published at',
       type: 'datetime',
+      group: 'meta',
     }),
     defineField({
       name: 'body',
       title: 'Body',
       type: 'blockContent',
+      group: 'content',
     }),
+    defineField({
+      name: 'language',
+      type: 'string',
+      validation: Rule => Rule.required(),
+      readOnly: true,
+      group: 'meta',
+    })
   ],
 
   preview: {
