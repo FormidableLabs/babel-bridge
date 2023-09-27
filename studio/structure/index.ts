@@ -19,6 +19,9 @@ export const structure: StructureResolver = (S) =>
           .schemaType('post')
           .filter('_type == "post" && language == $language')
           .params({language: defaultLanguage?.id})
+          .initialValueTemplates([
+            S.initialValueTemplateItem('post-by-language', {language: defaultLanguage?.id})
+          ])
         ),
         S.listItem()
         .title('Authors')

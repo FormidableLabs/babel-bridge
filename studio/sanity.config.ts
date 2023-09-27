@@ -1,9 +1,15 @@
-import {defineConfig} from 'sanity'
+import {defineConfig, SchemaPluginOptions} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemas'
 import { documentInternationalization } from '@sanity/document-internationalization'
 import { structure } from './structure'
+import { defaultTemplates } from './schemas/config/defaultTemplates'
+
+const schema: SchemaPluginOptions = {
+  types: schemaTypes,
+  templates: prev => [...defaultTemplates, ...prev],
+};
 
 const baseConfig = {
   projectId: 'hakfgcdn',
@@ -19,7 +25,7 @@ const baseConfig = {
       weakReferences: true,
     }),
   ],
-  schema: {types: schemaTypes},
+  schema,
 }
 
 export default defineConfig([
