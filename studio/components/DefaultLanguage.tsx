@@ -10,19 +10,27 @@ export const DefaultLanguage = (props: FieldProps) => {
   const [doc, setDoc] = useState<any>();
 
   useEffect(() => {
-    const id = docId.replace(/^drafts\./, '');
-    const params = {
-      type: 'supportedLanguages',
-      draft: `drafts.${id}`,
-      default: true,
-    };
+    let isMounted = true;
 
-    async function fetchDocument() {
+    const fetchDocument = async () => {
+      const id = docId.replace(/^drafts\./, '');
+      const params = {
+        type: 'supportedLanguages',
+        draft: `drafts.${id}`,
+        default: true,
+      };
+
       const query = `*[!(_id in [$draft]) && _type == $type && default == $default][0]`;
-      const result = await client.fetch(query, params);
-      setDoc(result);
+      return client.fetch(query, params);
     }
-    fetchDocument();
+
+    fetchDocument()
+      .then(document => isMounted && setDoc(document))
+      .catch(error => console.error('Error fetching document:', error));
+
+    return () => {
+      isMounted = false;
+    }
   }, [client, docId]);
 
   return (
