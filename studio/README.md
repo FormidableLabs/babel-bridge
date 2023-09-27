@@ -1,11 +1,22 @@
-# Sanity Blogging Content Studio
+# Sanity Studio
 
-Congratulations, you have now installed the Sanity Content Studio, an open source real-time content editing environment connected to the Sanity backend.
+This directory contains the Sanity Content Studio for the application.
 
-Now you can do the following things:
+<!-- Brief mention of what it contains, if applicable -->
 
-- [Read “getting started” in the docs](https://www.sanity.io/docs/introduction/getting-started?utm_source=readme)
-- Check out the example frontend: [React/Next.js](https://github.com/sanity-io/tutorial-sanity-blog-react-next)
-- [Read the blog post about this template](https://www.sanity.io/blog/build-your-own-blog-with-sanity-and-next-js?utm_source=readme)
-- [Join the community Slack](https://slack.sanity.io/?utm_source=readme)
-- [Extend and build plugins](https://www.sanity.io/docs/content-studio/extending?utm_source=readme)
+## Getting started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/en/download) (`v18.0.0`+)
+- [pnpm](https://pnpm.io/installation) (`v8.7.6`+)
+
+### Installation
+
+1. Install dependencies (`pnpm install`)
+1. Run the studio (`pnpm dev`): http://localhost:3333
+1. Have fun!
+
+<!-- ## Schema -->
+
+<!-- Document the usage of the document internationalisation plugin -->
