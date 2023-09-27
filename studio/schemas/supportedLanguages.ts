@@ -1,10 +1,12 @@
 import {defineField, defineType} from 'sanity'
-import { DefaultLanguage } from '../components/DefaultLanguage'
+import {TranslateIcon} from '@sanity/icons'
+import {DefaultLanguage} from '../components/DefaultLanguage'
 
 export default defineType({
   name: 'supportedLanguages',
   title: 'Languages',
   type: 'document',
+  icon: TranslateIcon,
   fields: [
     defineField({
       name: 'id',
