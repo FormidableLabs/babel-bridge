@@ -1,10 +1,12 @@
 import {defineField, defineType} from 'sanity'
+import {ComposeIcon} from '@sanity/icons'
 import { uniqueSlugByLanguage } from '../utils/uniqueSlugByLanguage'
 
 export default defineType({
   name: 'post',
   title: 'Post',
   type: 'document',
+  icon: ComposeIcon,
   groups: [
     {
       name: "content",
