@@ -17,6 +17,17 @@ This directory contains the Sanity Content Studio for the application.
 1. Run the studio (`pnpm dev`): http://localhost:3333
 1. Have fun!
 
-<!-- ## Schema -->
+### Schema
+
+There are a handful of schemas that we make use of within the studio.
+
+- Post
+- Author
+- Category
+- Supported Languages
+
+We have some additional "util" schemas that provide additional functionality.
+
+- Block Content
 
 <!-- Document the usage of the document internationalisation plugin -->
