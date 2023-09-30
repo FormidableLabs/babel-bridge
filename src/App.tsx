@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, defer, RouterProvider } from 'react-router-dom';
 import HomePage from './pages';
 import PostPage from './pages/[slug]';
 import { getDocuments, getDocumentBySlug } from './api/sanity';
@@ -15,8 +15,8 @@ const router = createBrowserRouter([
   {
     path: '/:slug',
     loader: async ({ params }) => {
-      const post = await getDocumentBySlug(params.slug as string);
-      return { post };
+      const post = getDocumentBySlug(params.slug as string);
+      return defer({ post });
     },
     Component: PostPage,
   },
