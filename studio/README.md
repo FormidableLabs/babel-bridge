@@ -22,7 +22,7 @@ This directory contains the Sanity Content Studio for the application.
 We are utilising the "blog" starter which gives us a few basic schemas: post, author and categories. We've built upon this by adding in Supported Languages to facilitate the document level translations.
 
 #### Supported Languages
-A small schema which will allow content managers to add new languages in which documents can be translated to. There is a default langauge set as `en-US`, this will serve as the base language for all other translations. 
+A small schema which will allow content managers to add new languages in which documents can be translated to. There is a default language set as `en-US`, this will serve as the base language for all other translations. 
 
 This schema can be managed by content authors or can be added to dynamically, if a language is requested by the user that does not exist in the supported languages, a language document will be created which will allow us to fill with the content translated from the api.
 
