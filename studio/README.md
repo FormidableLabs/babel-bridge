@@ -19,20 +19,12 @@ This directory contains the Sanity Content Studio for the application.
 
 ### Schema
 
-There are a small set of schemas that we make use of within the studio.
+We are utilising the "blog" starter which gives us a few basic schemas: post, author and categories. We've built upon this by adding in Supported Languages to facilitate the document level translations.
 
-#### Post
-The post schema as expected contains field relevant to each post: title, content, slug, image, author and categories.
-
-#### Author
-A small schema containing author data: name, image, bio. These can be referenced on a post.
-
-#### Category
-A small schema containing category data: title, description. These can be referenced on a post.
 #### Supported Languages
-A small schema which will allow content managers to add new languages in which documents can be translated to. This contains one default language that cannot and should not be changed. We have chosen to create the supported languages as a schema so that we can dynamically add languages using the sanity client.
+A small schema which will allow content managers to add new languages in which documents can be translated to. There is a default langauge set as `en-US`, this will serve as the base language for all other translations. 
 
-We also have some additional "util" schemas that provide additional functionality: Block Content. This provides some additional styles to the post body.
+This schema can be managed by content authors or can be added to dynamically, if a language is requested by the user that does not exist in the supported languages, a language document will be created which will allow us to fill with the content translated from the api.
 
 ### Document level translations
 
