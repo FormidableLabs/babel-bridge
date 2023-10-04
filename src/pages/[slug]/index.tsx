@@ -20,7 +20,6 @@ export default function PostPage() {
       <Suspense fallback={<PostSkeleton />}>
         <Await resolve={post}>
           {resolvedPost => {
-            console.log('resolvedPost', resolvedPost);
             return <Post post={resolvedPost} />;
           }}
         </Await>
