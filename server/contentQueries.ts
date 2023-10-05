@@ -35,6 +35,19 @@ export const getPost = async (slug: string) => {
   return data;
 };
 
+export const getPostTranslationMetadata = async (postId: string) => {
+  const data = await client.fetch(
+    `*[_type == "translation.metadata" && references($postId)][0] {
+      ...,
+    }`,
+    {
+      postId,
+    }
+  );
+
+  return data;
+};
+
 export const getLocalePost = async (slug: string, locale: string) => {
   const data = await client.fetch(
     `*[_type == "post" && slug.current == $slug && language == $locale && ${excludeDrafts}][0]{

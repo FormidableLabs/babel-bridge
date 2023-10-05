@@ -34,3 +34,21 @@ export const createLocalePost = async (
       return null;
     });
 };
+
+export const updatePostTranslationMetadata = async (data: {
+  _id: string;
+  translation: {
+    _type: string;
+    _key: string;
+    value: {
+      _weak: boolean;
+      _ref: string;
+      _type: string;
+    };
+  };
+}) => {
+  return client
+    .patch(data._id)
+    .append('translations', [data.translation])
+    .commit();
+};

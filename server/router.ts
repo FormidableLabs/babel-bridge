@@ -5,11 +5,16 @@ import {
   getLanguage,
   getLocalePost,
   getPost,
+  getPostTranslationMetadata,
   getPosts,
 } from './contentQueries';
 import { getLocale } from './utils';
 import { translate } from './translation';
-import { createLocalePost, createSupportedLanguage } from './contentMutations';
+import {
+  createLocalePost,
+  createSupportedLanguage,
+  updatePostTranslationMetadata,
+} from './contentMutations';
 
 const router = new Elysia()
   .get('/', async req => {
@@ -41,6 +46,7 @@ const router = new Elysia()
     },
     {
       async afterHandle(context) {
+        const originalPostId = context.response._id;
         // Get Locale
         const locale = getLocale(context.headers);
         if (locale.startsWith('en')) {
@@ -65,10 +71,11 @@ const router = new Elysia()
 
         // Check if we have the translation in sanity
         const post = await getLocalePost(context.params.slug, locale);
+
         if (!post) {
           console.log('No translation found, creating one');
           const response = context.response;
-          await createLocalePost({
+          const localePost = await createLocalePost({
             _type: 'post',
             body: response.body,
             language: response.language,
@@ -77,6 +84,30 @@ const router = new Elysia()
             },
             title: response.title,
           });
+
+          // Now we need to patch the translation.metadata document for the original post
+          const translationMetadata = await getPostTranslationMetadata(
+            originalPostId
+          );
+          if (translationMetadata) {
+            const translationKeys = translationMetadata.translations.map(
+              t => t._key
+            );
+            if (!translationKeys.includes(locale)) {
+              await updatePostTranslationMetadata({
+                _id: originalPostId,
+                translation: {
+                  _type: 'internationalizedArrayReferenceValue',
+                  _key: locale,
+                  value: {
+                    _weak: true,
+                    _ref: localePost!._id,
+                    _type: 'reference',
+                  },
+                },
+              });
+            }
+          }
         }
       },
     }
