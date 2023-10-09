@@ -90,12 +90,14 @@ const router = new Elysia()
             originalPostId
           );
           if (translationMetadata) {
+            console.log('Updating translation metadata');
             const translationKeys = translationMetadata.translations.map(
               t => t._key
             );
             if (!translationKeys.includes(locale)) {
+              console.log('Adding translation key');
               await updatePostTranslationMetadata({
-                _id: originalPostId,
+                _id: translationMetadata._id,
                 translation: {
                   _type: 'internationalizedArrayReferenceValue',
                   _key: locale,
@@ -106,6 +108,7 @@ const router = new Elysia()
                   },
                 },
               });
+              console.log('Translation metadata updated');
             }
           }
         }
