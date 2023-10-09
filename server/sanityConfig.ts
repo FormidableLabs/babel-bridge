@@ -5,7 +5,7 @@ const config: ClientConfig = {
   dataset: process.env.SANITY_DATASET,
   token: process.env.SANITY_SECRET_TOKEN,
   useCdn: false,
-  apiVersion: new Date().toISOString().slice(0, 10),
+  apiVersion: '2023-10-09',
 };
 
 export const client = createClient(config);

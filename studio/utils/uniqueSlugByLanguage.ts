@@ -1,7 +1,7 @@
 import { ValidationContext } from 'sanity'
 
 export const uniqueSlugByLanguage = async (slug: string, options: ValidationContext) => {
-  const client = options.getClient({apiVersion: new Date().toISOString().slice(0, 10)});
+  const client = options.getClient({apiVersion: '2023-10-09'});
   const { document } = options;
 
   const id = document?._id.replace(/^drafts\./, '');

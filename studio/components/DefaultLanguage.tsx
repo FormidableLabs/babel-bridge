@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 export const DefaultLanguage = (props: FieldProps) => {
 
-  const client = useClient({apiVersion: new Date().toISOString().slice(0, 10)});
+  const client = useClient({apiVersion: '2023-10-09'});
   const docId = useFormValue(['_id']) as string;
   const isDefaultLanguage = useFormValue(['default']) as boolean;
   const [doc, setDoc] = useState<any>();
