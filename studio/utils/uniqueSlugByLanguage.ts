@@ -1,7 +1,8 @@
 import { ValidationContext } from 'sanity'
+import { SANITY_API_VERSION } from '../../config'
 
 export const uniqueSlugByLanguage = async (slug: string, options: ValidationContext) => {
-  const client = options.getClient({apiVersion: '2023-10-09'});
+  const client = options.getClient({apiVersion: SANITY_API_VERSION});
   const { document } = options;
 
   const id = document?._id.replace(/^drafts\./, '');

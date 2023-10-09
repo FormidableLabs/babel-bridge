@@ -1,10 +1,11 @@
 import { FieldProps, useClient, useFormValue } from 'sanity';
 import { Stack, Card, Text } from '@sanity/ui';
 import { useEffect, useState } from 'react';
+import { SANITY_API_VERSION } from '../../config';
 
 export const DefaultLanguage = (props: FieldProps) => {
 
-  const client = useClient({apiVersion: '2023-10-09'});
+  const client = useClient({apiVersion: SANITY_API_VERSION});
   const docId = useFormValue(['_id']) as string;
   const isDefaultLanguage = useFormValue(['default']) as boolean;
   const [doc, setDoc] = useState<any>();
