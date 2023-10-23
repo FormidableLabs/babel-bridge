@@ -1,4 +1,4 @@
-import { Elysia } from 'elysia';
+import { Elysia, t } from 'elysia';
 
 import {
   getDocumentCount,
@@ -14,6 +14,7 @@ import {
   createLocalePost,
   createSupportedLanguage,
   updatePostTranslationMetadata,
+  updatePostTranslationProcessing,
 } from './contentMutations';
 
 const router = new Elysia()
@@ -114,6 +115,17 @@ const router = new Elysia()
         }
       },
     }
-  );
+  )
+  .post('/translate', async req => {
+    const { body, set } = req;
+    console.info(`POST /api/translate`);
+    // TODO: Only Update "Title" and "Content" fields once new LocaleFields have been added to the schema
+    // const translatedPost = await translate(body.post, body.locale);
+    await updatePostTranslationProcessing({
+      _id: body.post._id,
+      translationProcessing: false,
+    });
+    set.status = 200;
+  });
 
 export default router;
