@@ -114,7 +114,6 @@ export const ManualTranslateAction = (props: DocumentActionProps): DocumentActio
   }
 
   const onTranslate = async () => {
-    console.log('Do Translate')
     try {
       await client
         .patch(doc!._id)
