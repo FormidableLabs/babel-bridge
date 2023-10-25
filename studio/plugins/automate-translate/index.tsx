@@ -4,6 +4,7 @@ import { SANITY_API_VERSION } from '../../../config';
 import { flattenSchemaType } from './utils/flattenSchemaType';
 import { InternationalisedArrayProvider } from './components/InternationalisedArrayContext';
 import array from './schema/array';
+import object from './schema/object';
 
 export const AutomateTranslate = definePlugin(({ languages, fieldTypes }: any) => {
 
@@ -43,9 +44,11 @@ export const AutomateTranslate = definePlugin(({ languages, fieldTypes }: any) =
             name.startsWith('internationalisedArray')
           )
 
-          if (!hasInternationalisedArray) {
-            return props.renderDefault(props)
-          }
+          // if (!hasInternationalisedArray) {
+          //   return props.renderDefault(props)
+          // }
+
+          console.log(props)
 
           return InternationalisedArrayProvider({
             ...props,
@@ -59,6 +62,7 @@ export const AutomateTranslate = definePlugin(({ languages, fieldTypes }: any) =
         ...fieldTypes.map((type: string) =>
           array({ type })
         ),
+        ...fieldTypes.map((type: string) => object({type})),
       ],
     },
   }

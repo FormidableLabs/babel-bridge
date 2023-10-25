@@ -78,7 +78,19 @@ export default defineType({
       validation: Rule => Rule.required(),
       readOnly: true,
       group: 'meta',
-    })
+    }),
+    defineField({
+      name: 'localeTitle',
+      title: 'Locale Title',
+      type: 'internationalisedArrayLocaleString',
+      group: 'content',
+    }),
+    defineField({
+      name: 'localeBody',
+      title: 'Locale Body',
+      type: 'internationalisedArrayLocaleBlockContent',
+      group: 'content',
+    }),
   ],
 
   preview: {

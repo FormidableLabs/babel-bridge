@@ -20,16 +20,9 @@ const baseConfig = {
       structure
     }),
     visionTool(),
-    documentInternationalization({
-      supportedLanguages: (client) => client.fetch(`*[_type == "supportedLanguages"]{id, title}`),
-      schemaTypes: ['post'],
-      languageField: 'language',
-      weakReferences: true,
-    }),
     AutomateTranslate({
       languages: `*[_type == "supportedLanguages"]{id, title}`,
-      schemaTypes: ['post'],
-      fieldTypes: ['localeTitle', 'localeBody']
+      fieldTypes: ['localeString', 'localeBlockContent']
     })
   ],
   schema,
