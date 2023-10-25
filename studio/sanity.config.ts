@@ -1,10 +1,12 @@
-import {defineConfig, SchemaPluginOptions} from 'sanity'
-import {deskTool} from 'sanity/desk'
-import {visionTool} from '@sanity/vision'
-import {schemaTypes} from './schemas'
+import { defineConfig, defineField, SchemaPluginOptions } from 'sanity'
+import { deskTool } from 'sanity/desk'
+import { visionTool } from '@sanity/vision'
+import { schemaTypes } from './schemas'
 import { documentInternationalization } from '@sanity/document-internationalization'
 import { structure } from './structure'
 import { defaultTemplates } from './schemas/config/defaultTemplates'
+
+import { AutomateTranslate } from './plugins/automate-translate'
 
 const schema: SchemaPluginOptions = {
   types: schemaTypes,
@@ -24,6 +26,11 @@ const baseConfig = {
       languageField: 'language',
       weakReferences: true,
     }),
+    AutomateTranslate({
+      languages: `*[_type == "supportedLanguages"]{id, title}`,
+      schemaTypes: ['post'],
+      fieldTypes: ['localeTitle', 'localeBody']
+    })
   ],
   schema,
 }
