@@ -29,9 +29,6 @@ export const LocaleField = (props) => {
     }
   }, []);
 
-
-  console.log(supportedLanguages);
-
   return (
     <div>{props.renderDefault(props)}</div>
   )

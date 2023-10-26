@@ -6,11 +6,10 @@ import { InternationalisedArrayProvider } from './components/InternationalisedAr
 import array from './schema/array';
 import object from './schema/object';
 
-export const AutomateTranslate = definePlugin(({ languages, fieldTypes }: any) => {
+export const AutomateTranslate = definePlugin(() => {
 
-  console.log('schema types', ...fieldTypes.map((type: string) =>
-    array({ type })
-  ))
+  const languages = `*[_type == "supportedLanguages"]{id, title}`;
+  const fieldTypes = ['localeString', 'localeBlockContent'];
 
   return {
     name: 'AutomateTranslate',
@@ -44,11 +43,9 @@ export const AutomateTranslate = definePlugin(({ languages, fieldTypes }: any) =
             name.startsWith('internationalisedArray')
           )
 
-          // if (!hasInternationalisedArray) {
-          //   return props.renderDefault(props)
-          // }
-
-          console.log(props)
+          if (!hasInternationalisedArray) {
+            return props.renderDefault(props)
+          }
 
           return InternationalisedArrayProvider({
             ...props,

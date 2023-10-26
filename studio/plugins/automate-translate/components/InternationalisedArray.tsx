@@ -1,5 +1,6 @@
 import { Stack } from '@sanity/ui'
 import { useInternationalisedArrayContext } from './InternationalisedArrayContext'
+import { useMemo } from 'react';
 
 // TODO types
 // export type InternationalisedArrayProps = ArrayOfObjectsInputProps<
@@ -10,18 +11,25 @@ import { useInternationalisedArrayContext } from './InternationalisedArrayContex
 export default function InternationalisedArray(
   props: any
 ) {
-  const {members, value, schemaType, onChange} = props
-
-  console.log('IN INTER COMP', props);
 
   const {
-    languages,
-    defaultLanguages,
+    supportedLanguages
   } = useInternationalisedArrayContext();
+
+  const languagesAreValid = useMemo(
+    () =>
+      !supportedLanguages?.length ||
+      (supportedLanguages?.length && supportedLanguages.every((item) => item.id && item.title)),
+    [supportedLanguages]
+  )
 
   return (
     <Stack space={2}>
-      <p>HELLOOOOOOOO</p>
+      {languagesAreValid && supportedLanguages.map((lang) => {
+        return (
+          <input key={lang.id} type="text" placeholder={lang.title} />
+        )
+      })}
     </Stack>
   )
 }

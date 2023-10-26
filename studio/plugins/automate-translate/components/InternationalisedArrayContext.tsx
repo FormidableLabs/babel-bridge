@@ -29,14 +29,20 @@ export function InternationalisedArrayProvider(
 ) {
   const { internationalisedArray } = props
   const client = useClient({apiVersion: SANITY_API_VERSION});
+  const [supportedLanguages, setSupportedLanguages] = useState([]);
 
-  const supportedLanguages = useMemo(() => {
-    const fetchDefaultLanguages = async () => {
+  useEffect(() => {
+    const getSupportedLanguages = async () => {
       const data = await client.fetch(internationalisedArray.languages);
-      console.log('IN CONTEXT LANGAUGES', data);
-      return data;
+      if(!data.length) {
+        console.log('error getting supported languages');
+      }
+      return setSupportedLanguages(data);
     }
-    return fetchDefaultLanguages().catch((err) => console.log(err));
+
+    if(!supportedLanguages.length) {
+      getSupportedLanguages();
+    }
   }, [])
 
   return (

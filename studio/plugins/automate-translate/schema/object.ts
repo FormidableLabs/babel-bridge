@@ -1,9 +1,7 @@
 import {defineField, FieldDefinition} from 'sanity'
 import {createFieldName} from '../utils/createFieldName'
-
-// import {createFieldName} from '../components/createFieldName'
-// import InternationalizedField from '../components/InternationalizedField'
-// import InternationalizedInput from '../components/InternationalizedInput'
+import InternationalisedInput from '../components/InternationalisedInput'
+import InternationalisedField from '../components/InternationalisedField'
 
 type ObjectFactoryConfig = {
   type: string | FieldDefinition
@@ -12,26 +10,24 @@ type ObjectFactoryConfig = {
 export default (config: ObjectFactoryConfig): FieldDefinition<'object'> => {
   const {type} = config
   const typeName = typeof type === `string` ? type : type.name
-  const objectName = createFieldName(typeName, true)
+  const objectName = createFieldName(typeName, true);
 
   return defineField({
     name: objectName,
     title: `Internationalized array ${type}`,
     type: 'object',
-    // components: {
-    //   item: InternationalizedInput,
-    // },
+    components: {
+      item: InternationalisedInput,
+    },
     // TODO: Address this typing issue with the inner object
     // @ts-expect-error
     fields: [
       defineField({
         name: 'value',
         type: objectName,
-        // components: {
-        //   // TODO: Address this typing issue with the inner object
-        //   // @ts-expect-error
-        //   field: InternationalizedField,
-        // },
+        components: {
+          field: InternationalisedField,
+        },
       }),
     ],
     preview: {
