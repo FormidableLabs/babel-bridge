@@ -33,7 +33,7 @@ export function InternationalisedArrayProvider(
 
   useEffect(() => {
     const getSupportedLanguages = async () => {
-      const data = await client.fetch(internationalisedArray.languages);
+      const data = await client.fetch(internationalisedArray.languageQuery);
       if(!data.length) {
         console.log('error getting supported languages');
       }

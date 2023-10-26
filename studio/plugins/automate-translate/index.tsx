@@ -8,23 +8,21 @@ import object from './schema/object';
 
 export const AutomateTranslate = definePlugin(() => {
 
-  const languages = `*[_type == "supportedLanguages"]{id, title}`;
+  const languageQuery = `*[_type == "supportedLanguages"]{id, title}`;
   const fieldTypes = ['localeString', 'localeBlockContent'];
 
   return {
     name: 'AutomateTranslate',
-    studio: Array.isArray(languages)
-      ? undefined
-      : {
-        components: {
-          layout: (props) => (
-            <>
-              <Preload apiVersion={SANITY_API_VERSION} languages={languages} />
-              {props.renderDefault(props)}
-            </>
-          ),
-        },
+    studio: {
+      components: {
+        layout: (props) => (
+          <>
+            <Preload apiVersion={SANITY_API_VERSION} />
+            {props.renderDefault(props)}
+          </>
+        ),
       },
+    },
     form: {
       components: {
         input: (props) => {
@@ -49,7 +47,7 @@ export const AutomateTranslate = definePlugin(() => {
 
           return InternationalisedArrayProvider({
             ...props,
-            internationalisedArray: { languages }, //TODO move to pluginconfig?
+            internationalisedArray: { languageQuery }
           })
         },
       },

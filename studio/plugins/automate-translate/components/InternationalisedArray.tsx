@@ -12,6 +12,8 @@ export default function InternationalisedArray(
   props: any
 ) {
 
+  console.log(props.members)
+
   const {
     supportedLanguages
   } = useInternationalisedArrayContext();
@@ -25,11 +27,7 @@ export default function InternationalisedArray(
 
   return (
     <Stack space={2}>
-      {languagesAreValid && supportedLanguages.map((lang) => {
-        return (
-          <input key={lang.id} type="text" placeholder={lang.title} />
-        )
-      })}
+      {props.renderDefault(props)}
     </Stack>
   )
 }
