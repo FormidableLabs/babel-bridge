@@ -1,15 +1,17 @@
-import { definePlugin, isObjectInputProps } from 'sanity'
+import { defineField, definePlugin, isObjectInputProps } from 'sanity'
 import Preload from './components/Preload';
 import { SANITY_API_VERSION } from '../../../config';
 import { flattenSchemaType } from './utils/flattenSchemaType';
 import { InternationalisedArrayProvider } from './components/InternationalisedArrayContext';
 import array from './schema/array';
 import object from './schema/object';
+import InternationalisedArray from './components/InternationalisedArray';
 
 export const AutomateTranslate = definePlugin(() => {
 
   const languageQuery = `*[_type == "supportedLanguages"]{id, title}`;
-  const fieldTypes = ['localeString', 'localeBlockContent'];
+  const contextKey = 'internationalised__'
+  const fieldTypes = [{ type: 'string', name: 'localeString' }, { type: 'blockContent', name: 'localeBlockContent' }];
 
   return {
     name: 'AutomateTranslate',
@@ -38,7 +40,7 @@ export const AutomateTranslate = definePlugin(() => {
           )
 
           const hasInternationalisedArray = flatFieldTypeNames.some((name) =>
-            name.startsWith('internationalisedArray')
+            name.startsWith(contextKey)
           )
 
           if (!hasInternationalisedArray) {
@@ -54,11 +56,23 @@ export const AutomateTranslate = definePlugin(() => {
     },
     schema: {
       types: [
-        ...fieldTypes.map((type: string) =>
-          array({ type })
-        ),
-        ...fieldTypes.map((type: string) => object({type})),
-      ],
-    },
+        ...fieldTypes.map((field) => {
+          return defineField({
+            title: field.name,
+            type: 'object',
+            name: `${contextKey}${field.name}`,
+            components: {
+              input: InternationalisedArray,
+            },
+            fields: [
+              defineField({
+                name: `${field.name}Item`,
+                type: field.type
+              })
+            ]
+          })
+        })
+      ]
+    }
   }
 });

@@ -20,10 +20,23 @@ export default defineType({
   ],
   fields: [
     defineField({
+      name: 'localeTitle',
+      title: 'Locale Title',
+      type: 'internationalised__localeString',
+      group: 'content',
+    }),
+    defineField({
+      name: 'localeBody',
+      title: 'Locale Body',
+      type: 'internationalised__localeBlockContent',
+      group: 'content',
+    }),
+    defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
       group: 'content',
+      hidden: true,
     }),
     defineField({
       name: 'slug',
@@ -71,6 +84,7 @@ export default defineType({
       title: 'Body',
       type: 'blockContent',
       group: 'content',
+      hidden: true,
     }),
     defineField({
       name: 'language',
@@ -78,18 +92,6 @@ export default defineType({
       validation: Rule => Rule.required(),
       readOnly: true,
       group: 'meta',
-    }),
-    defineField({
-      name: 'localeTitle',
-      title: 'Locale Title',
-      type: 'internationalisedArrayLocaleString',
-      group: 'content',
-    }),
-    defineField({
-      name: 'localeBody',
-      title: 'Locale Body',
-      type: 'internationalisedArrayLocaleBlockContent',
-      group: 'content',
     }),
   ],
 
