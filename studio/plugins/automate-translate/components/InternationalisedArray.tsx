@@ -1,7 +1,7 @@
 import { Stack, TextInput, TextArea, Label } from '@sanity/ui'
 import { useInternationalisedArrayContext } from './InternationalisedArrayContext'
 import { useMemo, useState } from 'react';
-import { useClient, useFormValue } from 'sanity';
+import { useClient, useFormValue, FormInput } from 'sanity';
 import { SANITY_API_VERSION } from '../../../../config';
 
 type PatchArgs = {
@@ -72,8 +72,8 @@ export default function InternationalisedArray(
           const fieldValue = docLocaleBody?.[language.id];
           return (
             <Stack key={`localeBlockContent_${language.id}`} space={2}>
+              {/* <FormInput {...props} key={language.id} absolutePath={[""]}/> */}
               <Label htmlFor={language.id}>{language.title}</Label>
-              {/* TODO Ideally we need the proper editor */}
               <TextArea name={language.id} onChange={(ev) => patchLocaleBlockContent({ field: 'localeBody', fieldId: language.id, value: ev.target.value })} value={localeBodyValue[language.id] || fieldValue || ''} />
             </Stack>
           )

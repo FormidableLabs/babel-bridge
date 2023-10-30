@@ -3,12 +3,6 @@ import { ObjectInputProps, useClient } from 'sanity'
 
 import { SANITY_API_VERSION } from '../../../../config'
 
-// TODO types
-// type InternationalisedArrayContextProps = Required<PluginConfig> & {
-//   languages: Language[]
-//   filteredLanguages: Language[]
-// }
-
 export const InternationalisedArrayContext =
   createContext<any>({
     // ...CONFIG_DEFAULT,
@@ -28,19 +22,19 @@ export function InternationalisedArrayProvider(
   props: InternationalisedArrayProviderProps
 ) {
   const { internationalisedArray } = props
-  const client = useClient({apiVersion: SANITY_API_VERSION});
+  const client = useClient({ apiVersion: SANITY_API_VERSION });
   const [supportedLanguages, setSupportedLanguages] = useState([]);
 
   useEffect(() => {
     const getSupportedLanguages = async () => {
       const data = await client.fetch(internationalisedArray.languageQuery);
-      if(!data.length) {
+      if (!data.length) {
         console.log('error getting supported languages');
       }
       return setSupportedLanguages(data);
     }
 
-    if(!supportedLanguages.length) {
+    if (!supportedLanguages.length) {
       getSupportedLanguages();
     }
   }, [])
