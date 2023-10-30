@@ -52,3 +52,13 @@ export const updatePostTranslationMetadata = async (data: {
     .append('translations', [data.translation])
     .commit();
 };
+
+export const updatePostTranslationProcessing = async (data: {
+  _id: string;
+  translationProcessing: boolean;
+}) => {
+  return client
+    .patch(data._id)
+    .set({ translationProcessing: data.translationProcessing })
+    .commit();
+};

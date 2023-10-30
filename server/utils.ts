@@ -1,3 +1,14 @@
+import {
+  createSupportedLanguage,
+  createLocalePost,
+  updatePostTranslationMetadata,
+} from './contentMutations';
+import {
+  getLanguage,
+  getLocalePost,
+  getPostTranslationMetadata,
+} from './contentQueries';
+
 /** Gets the locale from the Accept-Language header or defaults to 'en-US' .*/
 export const getLocale = (headers: Record<string, string | null>) =>
   headers['accept-language']?.split(',')[0].split(';')[0] ?? 'en-US';
@@ -21,3 +32,61 @@ export const extractJSON = (input: string | null): object | null => {
     return null;
   }
 };
+
+// Helper function to create supported language if not exists
+export async function createSupportedLanguageIfNeeded(locale: string) {
+  const language = await getLanguage(locale);
+  if (!language) {
+    await createSupportedLanguage({
+      _type: 'supportedLanguages',
+      title: locale,
+      id: locale,
+      default: false,
+    });
+  }
+}
+
+// Helper function to create locale post and update translation metadata
+export async function handleLocalePostAndMetadata(
+  translatedPost: any,
+  originalPostId: string,
+  locale: string
+) {
+  const localePost = await getLocalePost(translatedPost.slug.current, locale);
+  if (!localePost) {
+    console.log('No translation found, creating one');
+    const createdLocalePost = await createLocalePost({
+      _type: 'post',
+      body: translatedPost.body,
+      language: translatedPost.language,
+      slug: {
+        current: translatedPost.slug.current,
+      },
+      title: translatedPost.title,
+    });
+
+    const translationMetadata = await getPostTranslationMetadata(
+      originalPostId
+    );
+    if (translationMetadata) {
+      console.log('Updating translation metadata');
+      const translationKeys = translationMetadata.translations.map(t => t._key);
+      if (!translationKeys.includes(locale)) {
+        console.log('Adding translation key');
+        await updatePostTranslationMetadata({
+          _id: translationMetadata._id,
+          translation: {
+            _type: 'internationalizedArrayReferenceValue',
+            _key: locale,
+            value: {
+              _weak: true,
+              _ref: createdLocalePost!._id,
+              _type: 'reference',
+            },
+          },
+        });
+        console.log('Translation metadata updated');
+      }
+    }
+  }
+}
