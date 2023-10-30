@@ -3,8 +3,6 @@ import Preload from './components/Preload';
 import { SANITY_API_VERSION } from '../../../config';
 import { flattenSchemaType } from './utils/flattenSchemaType';
 import { InternationalisedArrayProvider } from './components/InternationalisedArrayContext';
-import array from './schema/array';
-import object from './schema/object';
 import InternationalisedArray from './components/InternationalisedArray';
 
 export const AutomateTranslate = definePlugin(() => {
