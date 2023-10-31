@@ -1,6 +1,11 @@
 import {defineField, defineType} from 'sanity'
 import {ComposeIcon} from '@sanity/icons'
-import { uniqueSlugByLanguage } from '../utils/uniqueSlugByLanguage'
+import {uniqueSlugByLanguage} from '../utils/uniqueSlugByLanguage'
+
+const isReadOnly = ({parent}) => {
+  const {translationProcessing} = parent || {}
+  return translationProcessing
+}
 
 export default defineType({
   name: 'post',
@@ -9,13 +14,13 @@ export default defineType({
   icon: ComposeIcon,
   groups: [
     {
-      name: "content",
-      title: "Content",
+      name: 'content',
+      title: 'Content',
       default: true,
     },
     {
-      name: "meta",
-      title: "Meta",
+      name: 'meta',
+      title: 'Meta',
     },
   ],
   fields: [
@@ -37,6 +42,7 @@ export default defineType({
       type: 'string',
       group: 'content',
       hidden: true,
+      readOnly: isReadOnly,
     }),
     defineField({
       name: 'slug',
@@ -47,8 +53,14 @@ export default defineType({
         maxLength: 96,
         isUnique: uniqueSlugByLanguage,
       },
-      group: 'meta',    
-      validation: Rule => Rule.required(),
+      group: 'meta',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'translationProcessing',
+      title: 'Translation Processing',
+      type: 'boolean',
+      group: 'meta',
     }),
     defineField({
       name: 'author',
@@ -85,11 +97,12 @@ export default defineType({
       type: 'blockContent',
       group: 'content',
       hidden: true,
+      readOnly: isReadOnly,
     }),
     defineField({
       name: 'language',
       type: 'string',
-      validation: Rule => Rule.required(),
+      validation: (Rule) => Rule.required(),
       readOnly: true,
       group: 'meta',
     }),
