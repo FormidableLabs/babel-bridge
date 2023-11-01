@@ -15,7 +15,7 @@
     "sanity"
   ],
   "dependencies": {
-    "@sanity/icons": "^2.4.1",
+    "@sanity/icons": "^2.6.0",
     "@sanity/ui": "^1.8.2",
     "@sanity/vision": "^3.16.4",
     "locale-emoji": "^0.3.0",

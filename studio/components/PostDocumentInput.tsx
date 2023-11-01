@@ -1,38 +1,61 @@
 import localeEmoji from 'locale-emoji'
-import {Box, Flex, Select, Stack, Text} from '@sanity/ui'
+import {RefreshIcon} from '@sanity/icons'
+import {Box, Button, Flex, Inline, Select, Stack, Text} from '@sanity/ui'
 import {ChangeEvent, useCallback, useState} from 'react'
 import {ObjectInputProps} from 'sanity'
-import {LOCALES} from '../actions/config'
+import {LOCALES} from '../data/config'
+import {useSupportedLanguagesContext} from './SupportedLanguages/hooks/useSupportedLanguages'
 
 export const PostDocumentInput = (props: ObjectInputProps) => {
-  const [locale, setLocale] = useState('en-US')
+  const {
+    supportedLanguages,
+    error,
+    loading,
+    selectedLocale,
+    handleLocaleChange,
+    handleLocaleReset,
+  } = useSupportedLanguagesContext()
 
-  const onLocaleChange = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
-    const locale = event.target.value
-    setLocale(locale)
-  }, [])
+  const onLocaleChange = useCallback(
+    (event: ChangeEvent<HTMLSelectElement>) => {
+      const locale = event.target.value
+      handleLocaleChange(locale)
+    },
+    [handleLocaleChange],
+  )
+
+  const selectDisabled = loading || error || !supportedLanguages.length
 
   return (
     <Stack space={4}>
       <Flex justify="flex-end">
-        <Stack
-          space={3}
-          style={{
-            maxWidth: '275px',
-          }}
-        >
-          <Select onChange={onLocaleChange} value={locale}>
+        <Inline space={3}>
+          <Select
+            disabled={selectDisabled}
+            onChange={onLocaleChange}
+            value={selectedLocale}
+            style={{
+              maxWidth: '275px',
+            }}
+          >
             <option value="">Select a locale</option>
-            {Object.keys(LOCALES).map((locale) => {
-              const emoji = localeEmoji(locale)
+            {supportedLanguages.map((locale) => {
+              const emoji = localeEmoji(locale.id)
               return (
-                <option key={locale} value={locale}>
-                  {emoji} {LOCALES[locale].name}
+                <option key={locale.id} value={locale.id}>
+                  {emoji} {locale.title}
                 </option>
               )
             })}
           </Select>
-        </Stack>
+          <Button
+            text="Reset"
+            icon={RefreshIcon}
+            tone="caution"
+            disabled={selectedLocale === ''}
+            onClick={handleLocaleReset}
+          />
+        </Inline>
       </Flex>
       <Box>{props.renderDefault(props)}</Box>
     </Stack>
