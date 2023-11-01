@@ -41,9 +41,10 @@ export const PostDocumentInput = (props: ObjectInputProps) => {
             <option value="">Select a locale</option>
             {supportedLanguages.map((locale) => {
               const emoji = localeEmoji(locale.id)
+              const displayName = LOCALES[locale.id.replace('_', '-')].name
               return (
                 <option key={locale.id} value={locale.id}>
-                  {emoji} {locale.title}
+                  {emoji} {displayName}
                 </option>
               )
             })}
