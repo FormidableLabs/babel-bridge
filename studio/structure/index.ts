@@ -14,13 +14,11 @@ export const structure: StructureResolver = (S) =>
         .schemaType('post')
         .child(
           S.documentList()
-          .id(defaultLanguage.id)
-          .title(`${defaultLanguage?.title} Posts`)
+          .title('All Posts')
           .schemaType('post')
-          .filter('_type == "post" && language == $language')
-          .params({language: defaultLanguage?.id})
+          .filter('_type == "post"')
           .initialValueTemplates([
-            S.initialValueTemplateItem('post-by-language', {language: defaultLanguage?.id})
+            S.initialValueTemplateItem('post-by-language', {language: defaultLanguage?.id, localeTitle: {}, localeBody:  {}})
           ])
         ),
         S.listItem()

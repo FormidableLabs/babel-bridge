@@ -1,4 +1,10 @@
-export const LOCALES: Record<string, Record<string, string>> = {
+type Locale = {
+  name: string;
+  native: string;
+  default?: boolean
+}
+
+export const LOCALES: Record<string, Locale> = {
   'zh-CN': {
     name: 'Chinese (China)',
     native: '中文(中国)',
@@ -906,6 +912,7 @@ export const LOCALES: Record<string, Record<string, string>> = {
   'en-US': {
     name: 'English (United States)',
     native: 'English (United States)',
+    default: true
   },
   'en-US-POSIX': {
     name: 'English (United States, Computer)',

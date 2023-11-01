@@ -2,7 +2,7 @@ import {TranslateIcon, TransferIcon, CloseCircleIcon} from '@sanity/icons'
 import {ChangeEvent, useCallback, useState} from 'react'
 import {DocumentActionDescription, DocumentActionProps, useClient} from 'sanity'
 import {Flex, Inline, Button, Stack, Select, TextArea, Text, Badge, useToast} from '@sanity/ui'
-import {LOCALES} from './config'
+import {LOCALES} from '../data/config'
 import {usePostLocalesQuery} from '../hooks/usePostLocalesQuery'
 import {SANITY_API_VERSION} from '../../config'
 

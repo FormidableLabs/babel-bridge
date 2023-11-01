@@ -1,6 +1,7 @@
 import {defineField, defineType} from 'sanity'
 import {ComposeIcon} from '@sanity/icons'
 import {uniqueSlugByLanguage} from '../utils/uniqueSlugByLanguage'
+import {baseLanguage} from './localeTitle'
 
 const isReadOnly = ({parent}) => {
   const {translationProcessing} = parent || {}
@@ -25,10 +26,23 @@ export default defineType({
   ],
   fields: [
     defineField({
+      name: 'localeTitle',
+      title: 'Locale Title',
+      type: 'localeTitle',
+      group: 'content',
+    }),
+    defineField({
+      name: 'localeBody',
+      title: 'Locale Body',
+      type: 'localeBlockContent',
+      group: 'content',
+    }),
+    defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
       group: 'content',
+      hidden: true,
       readOnly: isReadOnly,
     }),
     defineField({
@@ -83,6 +97,7 @@ export default defineType({
       title: 'Body',
       type: 'blockContent',
       group: 'content',
+      hidden: true,
       readOnly: isReadOnly,
     }),
     defineField({
@@ -96,13 +111,8 @@ export default defineType({
 
   preview: {
     select: {
-      title: 'title',
-      author: 'author.name',
-      media: 'mainImage',
-    },
-    prepare(selection) {
-      const {author} = selection
-      return {...selection, subtitle: author && `by ${author}`}
+      title: `localeTitle.${baseLanguage?.id}`,
+      subtitle: 'slug.current',
     },
   },
 })
