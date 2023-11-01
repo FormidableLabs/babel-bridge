@@ -1,3 +1,4 @@
+import localeEmoji from 'locale-emoji'
 import {TranslateIcon, TransferIcon, CloseCircleIcon} from '@sanity/icons'
 import {ChangeEvent, useCallback, useState} from 'react'
 import {DocumentActionDescription, DocumentActionProps, useClient} from 'sanity'
@@ -68,9 +69,10 @@ const ModalContent = (props: ModalContentProps) => {
           {Object.keys(LOCALES)
             .filter((locale) => !locales.includes(locale))
             .map((locale) => {
+              const emoji = localeEmoji(locale)
               return (
                 <option key={locale} value={locale}>
-                  {LOCALES[locale].name}
+                  {emoji} {LOCALES[locale].name}
                 </option>
               )
             })}
