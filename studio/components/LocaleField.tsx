@@ -5,6 +5,7 @@ import { SANITY_API_VERSION } from "../../config";
 
 export const LocaleField = (props: any) => {
   const { members } = props;
+
   const [supportedLanguages, setSupportedLanguages] = useState([]);
   const client = useClient({ apiVersion: SANITY_API_VERSION });
 
@@ -14,7 +15,7 @@ export const LocaleField = (props: any) => {
       if (!data.length) {
         console.log('error getting supported languages');
       }
-      const result = members.filter((member) => {
+      const result = members && members.filter((member) => {
         return data.some((d) => {
           return member.name === d.id;
         });
@@ -32,6 +33,7 @@ export const LocaleField = (props: any) => {
         supportedLanguages.map((language: any) => {
           return (
             <MemberField
+              {...props}
               key={language.key}
               member={language}
               renderInput={() => (

@@ -6,9 +6,6 @@ import {structure} from './structure'
 import {defaultTemplates} from './schemas/config/defaultTemplates'
 import {ManualTranslateAction} from './actions'
 
-// TODO revist this...
-// import { AutomateTranslate } from './plugins/automate-translate'
-
 const schema: SchemaPluginOptions = {
   types: schemaTypes,
   templates: (prev) => [...defaultTemplates, ...prev],
@@ -21,7 +18,6 @@ const baseConfig = {
       structure,
     }),
     visionTool(),
-    // AutomateTranslate()
   ],
   schema,
   document: {
