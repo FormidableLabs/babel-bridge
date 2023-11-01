@@ -23,8 +23,8 @@ export default defineType({
   fields: AllLanguages.map(lang => ({
     title: lang.title,
     name: lang.id,
-    type: 'blockContent'
-    // type: 'array',
-    // of: [{ title: 'content', type: 'blockContent' }]
+    // type: 'blockContent'
+    type: 'array',
+    of: [{ title: 'content', type: 'block' }]
   }))
 })
