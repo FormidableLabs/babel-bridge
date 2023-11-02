@@ -83,7 +83,7 @@ const ModalContent = (props: ModalContentProps) => {
 }
 
 export const ManualTranslateAction = (props: DocumentActionProps): DocumentActionDescription => {
-  const {id, type, published, draft} = props
+  const {id, published, draft} = props
   const doc = draft || published
   const toast = useToast()
   const [modalOpen, setModalOpen] = useState(false)
@@ -99,7 +99,8 @@ export const ManualTranslateAction = (props: DocumentActionProps): DocumentActio
 
   const onLocaleChange = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
     const locale = event.target.value
-    setLocale(locale)
+    const formattedLocale = locale.replace('-', '_')
+    setLocale(formattedLocale)
   }, [])
 
   const sendTranslation = (locale: string) => {

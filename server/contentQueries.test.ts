@@ -38,7 +38,9 @@ describe('getPosts', () => {
     const expected = [{ _type: 'post', title: 'test' }];
     (client.fetch as jest.Mock).mockResolvedValueOnce(expected);
 
-    const actual = await getPosts();
+    const actual = await getPosts({
+      locale: 'en_US',
+    });
 
     expect(actual).toEqual(expected);
   });
@@ -47,7 +49,9 @@ describe('getPosts', () => {
     const expectedError = 'No posts found';
     (client.fetch as jest.Mock).mockResolvedValueOnce(null);
 
-    const actual = getPosts();
+    const actual = getPosts({
+      locale: 'en_US',
+    });
 
     await expect(actual).rejects.toThrow(expectedError);
   });
@@ -59,7 +63,10 @@ describe('getPost', () => {
     const expected = { _type: 'post', title: 'test', slug: { current: slug } };
     (client.fetch as jest.Mock).mockResolvedValueOnce(expected);
 
-    const actual = await getPost(slug);
+    const actual = await getPost({
+      slug,
+      locale: 'en_US',
+    });
 
     expect(actual).toEqual(expected);
   });
@@ -69,7 +76,10 @@ describe('getPost', () => {
     const expectedError = `Post not found for slug: ${slug}`;
     (client.fetch as jest.Mock).mockResolvedValueOnce(null);
 
-    const actual = getPost(slug);
+    const actual = getPost({
+      slug,
+      locale: 'en_US',
+    });
 
     await expect(actual).rejects.toThrow(expectedError);
   });
