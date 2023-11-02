@@ -12,10 +12,10 @@ Return just the JSON string in plain text - no formatting, no introductory messa
 const openai = new OpenAI();
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const translate = async (document: any, locale: string) => {
-  console.log(`Translating ${document.slug.current} to ${locale}...`);
+export const translate = async (data: any, locale: string) => {
+  console.log(`Translating content to ${locale}...`);
 
-  const prompt = getPrompt(locale, JSON.stringify(document));
+  const prompt = getPrompt(locale, JSON.stringify(data));
 
   const response = await openai.chat.completions.create({
     messages: [{ role: 'user', content: prompt }],

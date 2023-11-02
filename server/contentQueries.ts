@@ -13,49 +13,46 @@ export const getDocumentCount = async () => {
   return { published, drafts: total - published };
 };
 
-export const getPosts = async () => {
-  const data = await client.fetch(`*[_type == "post" && ${excludeDrafts}]`);
+type GetPostsArgs = {
+  locale: string;
+};
+
+export const getPosts = async (opts: GetPostsArgs) => {
+  const { locale = 'en-US' } = opts;
+  const data = await client.fetch(
+    `*[_type == "post" && ${excludeDrafts}]{
+    ...,
+    "title": coalesce(localeTitle[$locale], localeTitle['en_US']),
+    "body": coalesce(localeBody[$locale], localeBody['en_US'])
+  }`,
+    {
+      locale,
+    }
+  );
 
   if (!data?.length) throw new Error('No posts found');
 
   return data;
 };
 
-export const getPost = async (slug: string) => {
+type GetPostArgs = {
+  slug: string;
+  locale: string;
+};
+
+export const getPost = async (opts: GetPostArgs) => {
+  const { slug, locale = 'en-US' } = opts;
   const data = await client.fetch(
     `*[_type == "post" && slug.current == $slug && ${excludeDrafts}][0]{
       ...,
-      "author": author -> name
-    }`,
-    { slug }
-  );
-
-  if (!data) throw new Error(`Post not found for slug: ${slug}`);
-
-  return data;
-};
-
-export const getPostTranslationMetadata = async (postId: string) => {
-  const data = await client.fetch(
-    `*[_type == "translation.metadata" && references($postId)][0] {
-      ...,
-    }`,
-    {
-      postId,
-    }
-  );
-
-  return data;
-};
-
-export const getLocalePost = async (slug: string, locale: string) => {
-  const data = await client.fetch(
-    `*[_type == "post" && slug.current == $slug && language == $locale && ${excludeDrafts}][0]{
-      ...,
-      "author": author -> name
+      "author": author -> name,
+      "title": coalesce(localeTitle[$locale], localeTitle['en_US']),
+      "body": coalesce(localeBody[$locale], localeBody['en_US'])
     }`,
     { slug, locale }
   );
+
+  if (!data) throw new Error(`Post not found for slug: ${slug}`);
 
   return data;
 };

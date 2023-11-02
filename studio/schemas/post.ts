@@ -4,7 +4,6 @@ import {uniqueSlugByLanguage} from '../utils/uniqueSlugByLanguage'
 import {PostDocumentInput} from '../components/PostDocumentInput'
 import {baseLanguage} from './localeTitle'
 
-
 const isReadOnly = ({parent}: ConditionalPropertyCallbackContext) => {
   const {translationProcessing} = parent || {}
   return translationProcessing
@@ -35,19 +34,13 @@ export default defineType({
       title: 'Locale Title',
       type: 'localeTitle',
       group: 'content',
+      readOnly: isReadOnly,
     }),
     defineField({
       name: 'localeBody',
       title: 'Locale Body',
       type: 'localeBlockContent',
       group: 'content',
-    }),
-    defineField({
-      name: 'title',
-      title: 'Title',
-      type: 'string',
-      group: 'content',
-      hidden: true,
       readOnly: isReadOnly,
     }),
     defineField({
@@ -96,14 +89,6 @@ export default defineType({
       title: 'Published at',
       type: 'datetime',
       group: 'meta',
-    }),
-    defineField({
-      name: 'body',
-      title: 'Body',
-      type: 'blockContent',
-      group: 'content',
-      hidden: true,
-      readOnly: isReadOnly,
     }),
     defineField({
       name: 'language',
