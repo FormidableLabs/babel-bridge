@@ -49,20 +49,18 @@ const router = new Elysia()
           [formattedLocale]: post.localeBody['en_US'],
         },
       };
-      const translatedData = await translate(
+      const translatedContent = await translate(
         contentToTranslate,
         formattedLocale
       );
-      const translatedPost = {
+      return {
         ...post,
-        title: translatedData.localeTitle[formattedLocale],
-        body: translatedData.localeBody[formattedLocale],
+        title: translatedContent.localeTitle[formattedLocale],
+        body: translatedContent.localeBody[formattedLocale],
       };
-      return translatedPost;
     },
     {
       async afterHandle(context) {
-        console.log('Do Something ');
         const originalPostId = context.response._id;
         const locale = getLocale(context.headers);
         const formattedLocale = formatLocale(locale);
