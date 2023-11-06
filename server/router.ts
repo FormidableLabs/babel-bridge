@@ -38,9 +38,13 @@ const router = new Elysia()
         slug,
         locale: formattedLocale,
       });
-      if (formattedLocale.startsWith('en')) {
+      const hasTranslationForLocale =
+        !!post.localeTitle[locale] && !!post.localeBody[locale];
+
+      if (formattedLocale.startsWith('en') || hasTranslationForLocale) {
         return post;
       }
+
       const contentToTranslate = {
         localeTitle: {
           [formattedLocale]: post.localeTitle['en_US'],

@@ -12,7 +12,10 @@ Return just the JSON string in plain text - no formatting, no introductory messa
 const openai = new OpenAI();
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const translate = async (data: any, locale: string) => {
+export const translate = async (
+  data: any,
+  locale: string
+): Promise<Record<string, any>> => {
   console.log(`Translating content to ${locale}...`);
 
   const prompt = getPrompt(locale, JSON.stringify(data));
@@ -22,5 +25,5 @@ export const translate = async (data: any, locale: string) => {
     model: 'gpt-3.5-turbo',
   });
 
-  return extractJSON(response.choices[0].message.content);
+  return extractJSON(response.choices[0].message.content) ?? {};
 };
