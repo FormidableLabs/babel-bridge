@@ -1,6 +1,5 @@
 import { createClient, type ClientConfig } from '@sanity/client';
-
-export const SANITY_API_VERSION = '2023-10-09';
+import { SANITY_API_VERSION } from '../../../../config';
 
 const config: ClientConfig = {
   projectId: process.env.SANITY_PROJECT_ID,
