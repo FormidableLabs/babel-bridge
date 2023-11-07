@@ -104,7 +104,7 @@ export const ManualTranslateAction = (props: DocumentActionProps): DocumentActio
   }, [])
 
   const sendTranslation = (locale: string) => {
-    return fetch('http://localhost:3000/api/translate', {
+    return fetch('http://localhost:3000/translate', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
