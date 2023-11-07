@@ -1,4 +1,3 @@
-import { getLanguage } from './queries';
 import { client } from './sanity';
 
 export const createSupportedLanguage = async (data: {

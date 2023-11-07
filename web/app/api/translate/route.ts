@@ -15,7 +15,7 @@ export async function POST(request: Request) {
 
   await updatePostTranslationProcessing({
     _id: post._id,
-    translationProcessing: false,
+    translationProcessing: true,
   });
 
   const contentToTranslate = {
@@ -45,7 +45,7 @@ export async function POST(request: Request) {
 
   await updatePostTranslationProcessing({
     _id: post._id,
-    translationProcessing: true,
+    translationProcessing: false,
   });
 
   return new Response(null, {
