@@ -1,5 +1,5 @@
 import { PortableText } from './PortableText';
-import { TypedObject } from '@portabletext/types';
+import type { TypedObject } from '@portabletext/types';
 
 export type Post = {
   _id: string;
