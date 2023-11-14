@@ -27,11 +27,12 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
   return defer({
     post: postPromise,
+    locale,
   });
 }
 
 export default function Page() {
-  const { post } = useLoaderData<typeof loader>();
+  const { post, locale } = useLoaderData<typeof loader>();
 
   if (!post) {
     return (
@@ -49,7 +50,24 @@ export default function Page() {
       <Link to="/" className="block mb-4">
         🔙
       </Link>
-      <Suspense fallback={<PostSkeleton />}>
+      <Suspense
+        fallback={
+          <Container>
+            <div className="space-y-6">
+              <div
+                className="yellow-red-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative"
+                role="alert"
+              >
+                <strong className="font-bold">Were working on it!</strong>
+                <span className="block sm:inline ml-2">
+                  This post is being translated to {locale}.
+                </span>
+              </div>
+              <PostSkeleton />
+            </div>
+          </Container>
+        }
+      >
         <Await resolve={post}>
           {(resolvedPost) => <PostComponent post={resolvedPost as Post} />}
         </Await>
