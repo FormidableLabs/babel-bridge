@@ -6,4 +6,12 @@ import supportedLanguages from './supportedLanguages'
 import localeTitle from './localeTitle'
 import localeBlockContent from './localeBlockContent'
 
-export const schemaTypes = [post, author, category, blockContent, supportedLanguages, localeTitle, localeBlockContent]
+export const schemaTypes = [
+  post,
+  author,
+  category,
+  blockContent,
+  supportedLanguages,
+  localeTitle,
+  localeBlockContent,
+]

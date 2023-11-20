@@ -6,6 +6,7 @@ import {structure} from './structure'
 import {defaultTemplates} from './schemas/config/defaultTemplates'
 import {ManualTranslateAction} from './actions'
 import {StudioLayout} from './components/StudioLayout'
+import {translationService} from './plugins/TranslationService'
 
 const schema: SchemaPluginOptions = {
   types: schemaTypes,
@@ -23,6 +24,9 @@ const baseConfig = {
       structure,
     }),
     visionTool(),
+    translationService({
+      apiKey: process.env.SANITY_STUDIO_OPENAI_API_KEY as string,
+    }),
   ],
   schema,
   document: {

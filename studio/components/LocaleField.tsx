@@ -20,7 +20,7 @@ export const LocaleField = (props: any) => {
         })
       return setSupportedLanguages(result)
     }
-  }, [supportedLanguageDocuments])
+  }, [members, supportedLanguageDocuments])
 
   const supportedLanguageFields = !selectedLocale
     ? supportedLanguages
