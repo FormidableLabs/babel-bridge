@@ -3,9 +3,9 @@ import {TranslateIcon, TransferIcon, CloseCircleIcon} from '@sanity/icons'
 import {ChangeEvent, useCallback, useState} from 'react'
 import {DocumentActionDescription, DocumentActionProps, useClient} from 'sanity'
 import {Flex, Inline, Button, Stack, Select, Text, Badge, useToast} from '@sanity/ui'
-import {LOCALES} from '../data/config'
 import {usePostLocalesQuery} from '../hooks/usePostLocalesQuery'
-import {SANITY_API_VERSION} from '../../config'
+import {SANITY_API_VERSION} from '../../../../config'
+import {LOCALES} from '../constants'
 
 type ModalFooterProps = {
   onClose: () => void
@@ -82,7 +82,7 @@ const ModalContent = (props: ModalContentProps) => {
   )
 }
 
-export const ManualTranslateAction = (props: DocumentActionProps): DocumentActionDescription => {
+export const TranslationServiceAction = (props: DocumentActionProps): DocumentActionDescription => {
   const {id, published, draft} = props
   const doc = draft || published
   const toast = useToast()

@@ -1,4 +1,3 @@
-import {SanityDocument} from 'sanity'
 import {useListeningQuery} from 'sanity-plugin-utils'
 
 export const supportedLanguagesQuery = `*[_type == "supportedLanguages"]{id, title}`

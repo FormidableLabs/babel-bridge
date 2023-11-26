@@ -1,12 +1,16 @@
 import localeEmoji from 'locale-emoji'
 import {RefreshIcon} from '@sanity/icons'
-import {Box, Button, Flex, Inline, Select, Stack, Text} from '@sanity/ui'
-import {ChangeEvent, useCallback, useState} from 'react'
-import {ObjectInputProps} from 'sanity'
-import {LOCALES} from '../data/config'
+import {Box, Button, Flex, Inline, Select, Stack} from '@sanity/ui'
+import {ChangeEvent, useCallback} from 'react'
+import {ObjectInputProps, useFormValue} from 'sanity'
 import {useSupportedLanguagesContext} from './SupportedLanguages/hooks/useSupportedLanguages'
+import {LOCALES} from '../constants'
 
-export const PostDocumentInput = (props: ObjectInputProps) => {
+const DefaultComponentInput = (props: ObjectInputProps) => {
+  return props.renderDefault(props)
+}
+
+const RootComponentInput = (props: ObjectInputProps) => {
   const {
     supportedLanguages,
     error,
@@ -61,4 +65,14 @@ export const PostDocumentInput = (props: ObjectInputProps) => {
       <Box>{props.renderDefault(props)}</Box>
     </Stack>
   )
+}
+
+export const SanityDocumentInputComponent = (props: ObjectInputProps) => {
+  const documentType = useFormValue(['_type'])
+  const inputId = props.id
+
+  if (documentType === 'post' && inputId === 'root') {
+    return <RootComponentInput {...props} />
+  }
+  return <DefaultComponentInput {...props} />
 }

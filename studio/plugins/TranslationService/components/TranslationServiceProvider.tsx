@@ -4,6 +4,7 @@ import {LayoutProps} from 'sanity'
 
 import {DEFAULT_CONFIG} from '../constants'
 import {PluginConfig, PluginConfigContext} from '../types'
+import {SupportedLanguagesContextProvider} from './SupportedLanguages/hooks/useSupportedLanguages'
 
 const TranslationServiceContext = createContext<PluginConfigContext>(DEFAULT_CONFIG)
 
@@ -19,7 +20,9 @@ export function TranslationServiceProvider(props: TranslationServiceProviderProp
   const {pluginConfig} = props
   return (
     <TranslationServiceContext.Provider value={{...pluginConfig}}>
-      {props.renderDefault(props)}
+      <SupportedLanguagesContextProvider>
+        {props.renderDefault(props)}
+      </SupportedLanguagesContextProvider>
     </TranslationServiceContext.Provider>
   )
 }

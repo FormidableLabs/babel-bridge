@@ -1,6 +1,6 @@
 import {defineField, defineType} from 'sanity'
 import {TranslateIcon} from '@sanity/icons'
-import {DefaultLanguage} from '../components/DefaultLanguage'
+import {DefaultLanguage} from '../components'
 
 export default defineType({
   name: 'supportedLanguages',
@@ -31,7 +31,7 @@ export default defineType({
   preview: {
     select: {
       title: 'id',
-      description: 'title'
+      description: 'title',
     },
   },
 })

@@ -1,7 +1,7 @@
 import {FieldProps, useClient, useFormValue} from 'sanity'
 import {Stack, Card, Text} from '@sanity/ui'
 import {useEffect, useState} from 'react'
-import {SANITY_API_VERSION} from '../../config'
+import {SANITY_API_VERSION} from '../../../../config'
 
 export const DefaultLanguage = (props: FieldProps) => {
   const client = useClient({apiVersion: SANITY_API_VERSION})

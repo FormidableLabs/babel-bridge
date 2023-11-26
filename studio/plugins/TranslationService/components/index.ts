@@ -1,2 +1,4 @@
 export * from './TranslationServiceProvider'
-export * from './TranslationServiceToolComponent'
+export * from './SanityDocumentInputComponent'
+export * from './LocaleField'
+export * from './DefaultLanguage'
