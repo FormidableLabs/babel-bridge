@@ -57,7 +57,7 @@ export const getPost = async (opts: GetPostArgs) => {
 
   if (!data) {
     console.warn('No Post found');
-    return {};
+    return null;
   }
 
   return data;
@@ -72,6 +72,10 @@ export const getLanguage = async (language: string) => {
       language,
     }
   );
+
+  if (!data) {
+    return null;
+  }
 
   return data;
 };
