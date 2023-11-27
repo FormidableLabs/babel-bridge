@@ -1,7 +1,6 @@
 import {ConditionalPropertyCallbackContext, defineField, defineType} from 'sanity'
 import {ComposeIcon} from '@sanity/icons'
 import {uniqueSlugByLanguage} from '../utils/uniqueSlugByLanguage'
-import {baseLanguage} from '../plugins/TranslationService/schemas/localeTitle'
 
 const isReadOnly = ({parent}: ConditionalPropertyCallbackContext) => {
   const {translationProcessing} = parent || {}
@@ -97,7 +96,7 @@ export default defineType({
 
   preview: {
     select: {
-      title: `localeTitle.${baseLanguage?.id}`,
+      title: `localeTitle.en_US`,
       subtitle: 'slug.current',
     },
   },

@@ -4,7 +4,8 @@ import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemas'
 import {structure} from './structure'
 import {defaultTemplates} from './schemas/config/defaultTemplates'
-import {translationService} from './plugins/TranslationService'
+import {sanityPluginTranslation} from 'sanity-plugin-translation'
+// import {translationService} from './plugins/TranslationService'
 
 const schema: SchemaPluginOptions = {
   types: schemaTypes,
@@ -18,7 +19,7 @@ const baseConfig = {
       structure,
     }),
     visionTool(),
-    translationService({
+    sanityPluginTranslation({
       apiKey: process.env.SANITY_STUDIO_OPENAI_API_KEY as string,
     }),
   ],
