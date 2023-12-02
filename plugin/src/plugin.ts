@@ -1,7 +1,7 @@
 import {definePlugin} from 'sanity'
 import {DEFAULT_CONFIG} from './const'
 import {SanityDocumentInputComponent, TranslationServiceProvider} from './components'
-import {TranslationServiceAction} from './actions'
+import {CreateTranslationAction} from './actions'
 import {schemaTypes} from './schemas'
 import {TranslationPluginConfig} from './types'
 
@@ -45,7 +45,7 @@ export const sanityPluginTranslation = definePlugin<TranslationPluginConfig | vo
         actions: (prev, context) => {
           // @ts-ignore
           if (schemaTypes.includes(context.schemaType)) {
-            return [...prev, TranslationServiceAction]
+            return [...prev, CreateTranslationAction]
           }
           return prev
         },

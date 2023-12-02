@@ -88,7 +88,7 @@ const ModalContent = (props: ModalContentProps) => {
   )
 }
 
-export const TranslationServiceAction = (props: DocumentActionProps): DocumentActionDescription => {
+export const CreateTranslationAction = (props: DocumentActionProps): DocumentActionDescription => {
   const {sanityApiVersion, apiKey, sanityToken} = useTranslationServiceContext()
   const {id, published, draft} = props
   const doc = draft || published
@@ -142,14 +142,14 @@ export const TranslationServiceAction = (props: DocumentActionProps): DocumentAc
         closable: true,
         status: 'success',
         title: 'Translation Started!',
-        description: 'Your document is being translated. You will be notified when it is complete.',
+        description: 'Your fields are being translated. You will be notified when it is complete.',
       })
     } catch (err) {
       toast.push({
         closable: true,
         status: 'error',
         title: 'Error',
-        description: 'There was an error translating this document. Please try again.',
+        description: 'There was an error translating some fields. Please try again.',
       })
     }
   }
@@ -160,14 +160,14 @@ export const TranslationServiceAction = (props: DocumentActionProps): DocumentAc
   return {
     disabled,
     icon: TranslateIcon,
-    label: 'Translate',
+    label: 'Create Translation',
     tone: 'primary',
     onHandle: () => {
       setModalOpen(true)
     },
     dialog: modalOpen && {
       type: 'dialog',
-      header: 'Translate Document',
+      header: 'Translate Fields',
       content: (
         <ModalContent locales={locales} handleLocaleChange={onLocaleChange} disabled={!!error} />
       ),
