@@ -7,6 +7,7 @@ import {schemaTypes} from './schemas'
 export type TranslationPluginConfig = {
   apiKey: string
   apiVersion?: string
+  schemaTypes: string[]
 }
 
 /**
@@ -27,6 +28,7 @@ export const sanityPluginTranslation = definePlugin<TranslationPluginConfig | vo
     config = {
       apiKey: '',
       apiVersion: new Date().toISOString().split('T')[0],
+      schemaTypes: [],
     },
   ) => {
     const pluginConfig = {...DEFAULT_CONFIG, ...config}
@@ -39,7 +41,11 @@ export const sanityPluginTranslation = definePlugin<TranslationPluginConfig | vo
       },
       document: {
         actions: (prev, context) => {
-          return context.schemaType === 'post' ? [...prev, TranslationServiceAction] : prev
+          // @ts-ignore
+          if (schemaTypes.includes(context.schemaType)) {
+            return [...prev, TranslationServiceAction]
+          }
+          return prev
         },
       },
       schema: {

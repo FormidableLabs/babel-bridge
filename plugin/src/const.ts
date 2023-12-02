@@ -1,6 +1,7 @@
 export const DEFAULT_CONFIG = {
   apiKey: '',
   apiVersion: new Date().toISOString().split('T')[0],
+  schemaTypes: [],
 }
 
 type Locale = {

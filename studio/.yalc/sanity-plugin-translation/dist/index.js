@@ -18,7 +18,8 @@ function _interopDefaultCompat(e) {
 var localeEmoji__default = /*#__PURE__*/_interopDefaultCompat(localeEmoji);
 const DEFAULT_CONFIG = {
   apiKey: "",
-  apiVersion: ( /* @__PURE__ */new Date()).toISOString().split("T")[0]
+  apiVersion: ( /* @__PURE__ */new Date()).toISOString().split("T")[0],
+  schemaTypes: []
 };
 const LOCALES = {
   "zh-CN": {
@@ -3053,9 +3054,12 @@ const RootComponentInput = props => {
   });
 };
 const SanityDocumentInputComponent = props => {
+  const {
+    schemaTypes
+  } = useTranslationServiceContext();
   const documentType = sanity.useFormValue(["_type"]);
   const inputId = props.id;
-  if (documentType === "post" && inputId === "root") {
+  if (schemaTypes.includes(documentType) && inputId === "root") {
     return /* @__PURE__ */jsxRuntime.jsx(RootComponentInput, {
       ...props
     });
@@ -3397,7 +3401,8 @@ const schemaTypes = [localeTitle, localeBlockContent, supportedLanguages];
 const sanityPluginTranslation = sanity.definePlugin(function () {
   let config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
     apiKey: "",
-    apiVersion: ( /* @__PURE__ */new Date()).toISOString().split("T")[0]
+    apiVersion: ( /* @__PURE__ */new Date()).toISOString().split("T")[0],
+    schemaTypes: []
   };
   const pluginConfig = {
     ...DEFAULT_CONFIG,
@@ -3415,7 +3420,10 @@ const sanityPluginTranslation = sanity.definePlugin(function () {
     },
     document: {
       actions: (prev, context) => {
-        return context.schemaType === "post" ? [...prev, TranslationServiceAction] : prev;
+        if (schemaTypes.includes(context.schemaType)) {
+          return [...prev, TranslationServiceAction];
+        }
+        return prev;
       }
     },
     schema: {

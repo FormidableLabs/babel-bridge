@@ -5,6 +5,7 @@ import {ChangeEvent, useCallback} from 'react'
 import {ObjectInputProps, useFormValue} from 'sanity'
 import {useSupportedLanguagesContext} from './SupportedLanguages/hooks/useSupportedLanguages'
 import {LOCALES} from '../const'
+import {useTranslationServiceContext} from './TranslationServiceProvider'
 
 const DefaultComponentInput = (props: ObjectInputProps) => {
   return props.renderDefault(props)
@@ -68,10 +69,11 @@ const RootComponentInput = (props: ObjectInputProps) => {
 }
 
 export const SanityDocumentInputComponent = (props: ObjectInputProps) => {
-  const documentType = useFormValue(['_type'])
+  const {schemaTypes} = useTranslationServiceContext()
+  const documentType = useFormValue(['_type']) as string
   const inputId = props.id
 
-  if (documentType === 'post' && inputId === 'root') {
+  if (schemaTypes.includes(documentType) && inputId === 'root') {
     return <RootComponentInput {...props} />
   }
   return <DefaultComponentInput {...props} />

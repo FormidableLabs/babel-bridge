@@ -5,7 +5,6 @@ import {schemaTypes} from './schemas'
 import {structure} from './structure'
 import {defaultTemplates} from './schemas/config/defaultTemplates'
 import {sanityPluginTranslation} from 'sanity-plugin-translation'
-// import {translationService} from './plugins/TranslationService'
 
 const schema: SchemaPluginOptions = {
   types: schemaTypes,
@@ -21,6 +20,7 @@ const baseConfig = {
     visionTool(),
     sanityPluginTranslation({
       apiKey: process.env.SANITY_STUDIO_OPENAI_API_KEY as string,
+      schemaTypes: ['post'],
     }),
   ],
   schema,
