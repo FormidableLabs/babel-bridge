@@ -1,3 +1,3 @@
 export * from './TranslationServiceProvider'
-export * from './SanityDocumentInputComponent'
+export * from './DocumentFormWithLocaleSelector'
 export * from './LocaleField'

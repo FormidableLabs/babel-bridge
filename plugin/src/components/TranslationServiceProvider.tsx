@@ -18,6 +18,7 @@ type TranslationServiceProviderProps = LayoutProps & {
 
 export function TranslationServiceProvider(props: TranslationServiceProviderProps) {
   const {pluginConfig} = props
+
   return (
     <TranslationServiceContext.Provider value={{...pluginConfig}}>
       <SupportedLanguagesContextProvider>

@@ -1,6 +1,6 @@
 import {definePlugin} from 'sanity'
 import {DEFAULT_CONFIG} from './const'
-import {SanityDocumentInputComponent, TranslationServiceProvider} from './components'
+import {DocumentFormWithLocaleSelector, TranslationServiceProvider} from './components'
 import {CreateTranslationAction} from './actions'
 import {schemaTypes} from './schemas'
 import {TranslationPluginConfig} from './types'
@@ -12,6 +12,7 @@ export const sanityPluginTranslation = definePlugin<TranslationPluginConfig | vo
       sanityToken: '',
       sanityApiVersion: new Date().toISOString().split('T')[0],
       schemaTypes: [],
+      defaultLanguage: '',
     },
   ) => {
     const pluginConfig = {...DEFAULT_CONFIG, ...config}
@@ -55,7 +56,7 @@ export const sanityPluginTranslation = definePlugin<TranslationPluginConfig | vo
       },
       form: {
         components: {
-          input: SanityDocumentInputComponent,
+          input: DocumentFormWithLocaleSelector,
         },
       },
     }

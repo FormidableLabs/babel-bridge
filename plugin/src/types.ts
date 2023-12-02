@@ -3,6 +3,7 @@ export type TranslationPluginConfig = {
   sanityToken: string
   schemaTypes: string[]
   sanityApiVersion?: string
+  defaultLanguage?: string
 }
 export type PluginConfigContext = Required<TranslationPluginConfig>
 export type Locale = {

@@ -5,6 +5,7 @@ export const DEFAULT_CONFIG = {
   sanityToken: '',
   sanityApiVersion: new Date().toISOString().split('T')[0],
   schemaTypes: [],
+  defaultLanguage: '',
 }
 
 export const LOCALES: Record<string, Locale> = {

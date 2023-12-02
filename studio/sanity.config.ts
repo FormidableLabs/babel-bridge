@@ -21,10 +21,10 @@ const baseConfig = {
     sanityPluginTranslation({
       // Required Configuration
       apiKey: process.env.SANITY_STUDIO_OPENAI_API_KEY as string,
-      sanityToken: '',
-      schemaTypes: ['post'],
+      // sanityToken: '',
+      // schemaTypes: ['post'],
       // Optional Configuration
-      sanityApiVersion: '',
+      // sanityApiVersion: '',
       defaultLanguage: 'en_US',
     }),
   ],

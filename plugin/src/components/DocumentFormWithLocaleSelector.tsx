@@ -68,7 +68,7 @@ const RootComponentInput = (props: ObjectInputProps) => {
   )
 }
 
-export const SanityDocumentInputComponent = (props: ObjectInputProps) => {
+export const DocumentFormWithLocaleSelector = (props: ObjectInputProps) => {
   const {schemaTypes} = useTranslationServiceContext()
   const documentType = useFormValue(['_type']) as string
   const inputId = props.id
