@@ -1,19 +1,14 @@
-import {defineConfig, SchemaPluginOptions, StudioComponentsPluginOptions} from 'sanity'
+import {defineConfig, SchemaPluginOptions} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemas'
 import {structure} from './structure'
 import {defaultTemplates} from './schemas/config/defaultTemplates'
-import {ManualTranslateAction} from './actions'
-import {StudioLayout} from './components/StudioLayout'
+import {sanityPluginTranslation} from 'sanity-plugin-translation'
 
 const schema: SchemaPluginOptions = {
   types: schemaTypes,
   templates: (prev) => [...defaultTemplates, ...prev],
-}
-
-const studioComponents: StudioComponentsPluginOptions = {
-  layout: StudioLayout,
 }
 
 const baseConfig = {
@@ -23,16 +18,12 @@ const baseConfig = {
       structure,
     }),
     visionTool(),
+    sanityPluginTranslation({
+      apiKey: process.env.SANITY_STUDIO_OPENAI_API_KEY as string,
+      schemaTypes: ['post'],
+    }),
   ],
   schema,
-  document: {
-    actions: (prev, context) => {
-      return context.schemaType === 'post' ? [...prev, ManualTranslateAction] : prev
-    },
-  },
-  studio: {
-    components: studioComponents,
-  },
 }
 
 export default defineConfig([

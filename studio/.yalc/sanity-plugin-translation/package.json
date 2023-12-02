@@ -1,0 +1,56 @@
+{
+  "name": "sanity-plugin-translation",
+  "version": "1.0.0",
+  "description": "on the fly translations using ai",
+  "keywords": [
+    "sanity",
+    "sanity-plugin"
+  ],
+  "license": "MIT",
+  "author": "Umar Gora <umar.gora@nearform.com>",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "source": "./src/index.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.esm.js",
+      "default": "./dist/index.esm.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.esm.js",
+  "source": "./src/index.ts",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "sanity.json",
+    "src",
+    "v2-incompatible.js"
+  ],
+  "scripts": {
+    "build": "run-s clean && plugin-kit verify-package --silent && pkg-utils build --strict && pkg-utils --strict",
+    "clean": "rimraf dist",
+    "format": "prettier --write --cache --ignore-unknown .",
+    "link-watch": "plugin-kit link-watch",
+    "lint": "eslint .",
+    "prepublishOnly": "run-s build",
+    "watch": "pkg-utils watch --strict"
+  },
+  "dependencies": {
+    "@sanity/client": "^6.8.6",
+    "@sanity/icons": "^2.7.0",
+    "@sanity/incompatible-plugin": "^1.0.4",
+    "@sanity/ui": "^1.9.3",
+    "locale-emoji": "^0.3.0",
+    "sanity-plugin-utils": "^1.6.2"
+  },
+  "peerDependencies": {
+    "react": "^18",
+    "sanity": "^3"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "yalcSig": "2e1882c550b8e05ca38c070d49289348"
+}

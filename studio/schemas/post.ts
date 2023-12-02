@@ -1,8 +1,6 @@
 import {ConditionalPropertyCallbackContext, defineField, defineType} from 'sanity'
 import {ComposeIcon} from '@sanity/icons'
 import {uniqueSlugByLanguage} from '../utils/uniqueSlugByLanguage'
-import {PostDocumentInput} from '../components/PostDocumentInput'
-import {baseLanguage} from './localeTitle'
 
 const isReadOnly = ({parent}: ConditionalPropertyCallbackContext) => {
   const {translationProcessing} = parent || {}
@@ -13,9 +11,6 @@ export default defineType({
   name: 'post',
   title: 'Post',
   type: 'document',
-  components: {
-    input: PostDocumentInput,
-  },
   icon: ComposeIcon,
   groups: [
     {
@@ -101,7 +96,7 @@ export default defineType({
 
   preview: {
     select: {
-      title: `localeTitle.${baseLanguage?.id}`,
+      title: `localeTitle.en_US`,
       subtitle: 'slug.current',
     },
   },

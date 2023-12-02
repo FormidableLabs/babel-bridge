@@ -15,7 +15,7 @@
     "sanity"
   ],
   "dependencies": {
-    "@sanity/icons": "^2.6.0",
+    "@sanity/icons": "^2.7.0",
     "@sanity/ui": "^1.8.2",
     "@sanity/vision": "^3.16.4",
     "locale-emoji": "^0.3.0",
@@ -23,6 +23,7 @@
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",
     "sanity": "^3.16.4",
+    "sanity-plugin-translation": "file:.yalc/sanity-plugin-translation",
     "sanity-plugin-utils": "^1.6.2",
     "styled-components": "^5.3.9"
   },
