@@ -1,5 +1,6 @@
 import {ReactNode, createContext, useCallback, useContext, useState} from 'react'
-import {useSupportedLanguagesQuery, type SupportedLanguage} from '../../../hooks'
+import {useSupportedLanguagesQuery} from './useSupportedLanguagesQuery'
+import {SupportedLanguage} from '../types'
 
 export type UseSupportedLanguages = {
   error: boolean

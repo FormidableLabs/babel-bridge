@@ -1,6 +1,6 @@
 import {SanityDocument} from '@sanity/client'
 import {useListeningQuery} from 'sanity-plugin-utils'
-import {Return} from './types'
+import {Return} from '../types'
 
 export const postLocalesQuery = `*[_type == "post" && _id == $postId][0] {
   "slug": slug.current,

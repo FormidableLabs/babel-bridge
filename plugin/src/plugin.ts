@@ -3,35 +3,37 @@ import {DEFAULT_CONFIG} from './const'
 import {SanityDocumentInputComponent, TranslationServiceProvider} from './components'
 import {TranslationServiceAction} from './actions'
 import {schemaTypes} from './schemas'
+import {TranslationPluginConfig} from './types'
 
-export type TranslationPluginConfig = {
-  apiKey: string
-  apiVersion?: string
-  schemaTypes: string[]
-}
-
-/**
- * Usage in `sanity.config.ts` (or .js)
- *
- * ```ts
- * import {defineConfig} from 'sanity'
- * import {myPlugin} from 'sanity-plugin-translation'
- *
- * export default defineConfig({
- *   // ...
- *   plugins: [myPlugin()],
- * })
- * ```
- */
 export const sanityPluginTranslation = definePlugin<TranslationPluginConfig | void>(
   (
     config = {
       apiKey: '',
-      apiVersion: new Date().toISOString().split('T')[0],
+      sanityToken: '',
+      sanityApiVersion: new Date().toISOString().split('T')[0],
       schemaTypes: [],
     },
   ) => {
     const pluginConfig = {...DEFAULT_CONFIG, ...config}
+
+    if (!pluginConfig.apiKey) {
+      throw new Error(
+        'You must specify an OpenAI API key. Update the `apiKey` option in the sanityPluginTranslation() configuration.',
+      )
+    }
+
+    if (!pluginConfig.sanityToken) {
+      throw new Error(
+        'You must specify a Sanity API token. Update the `sanityToken` option in the sanityPluginTranslation() configuration.',
+      )
+    }
+
+    if (pluginConfig.schemaTypes.length === 0) {
+      throw new Error(
+        'You must specify at least one schema type on which to enable translations. Update the `schemaTypes` option in the sanityPluginTranslation() configuration.',
+      )
+    }
+
     return {
       name: 'sanity-plugin-translation',
       studio: {

@@ -1,7 +1,13 @@
 import localeEmoji from 'locale-emoji'
 import {TranslateIcon, TransferIcon, CloseCircleIcon} from '@sanity/icons'
 import {ChangeEvent, useCallback, useState} from 'react'
-import {DocumentActionDescription, DocumentActionProps, useClient} from 'sanity'
+import {
+  DocumentActionDescription,
+  DocumentActionProps,
+  useClient,
+  useDataset,
+  useProject,
+} from 'sanity'
 import {Flex, Inline, Button, Stack, Select, Text, Badge, useToast} from '@sanity/ui'
 import {LOCALES} from '../const'
 import {usePostLocalesQuery} from '../hooks/usePostLocalesQuery'
@@ -83,7 +89,7 @@ const ModalContent = (props: ModalContentProps) => {
 }
 
 export const TranslationServiceAction = (props: DocumentActionProps): DocumentActionDescription => {
-  const {apiVersion} = useTranslationServiceContext()
+  const {sanityApiVersion, apiKey, sanityToken} = useTranslationServiceContext()
   const {id, published, draft} = props
   const doc = draft || published
   const toast = useToast()
@@ -91,8 +97,10 @@ export const TranslationServiceAction = (props: DocumentActionProps): DocumentAc
   const [locale, setLocale] = useState('')
   const {data, loading, error} = usePostLocalesQuery({postId: id})
   const client = useClient({
-    apiVersion,
+    apiVersion: sanityApiVersion,
   })
+  const pid = useProject()
+  const dataset = useDataset()
 
   const onClose = useCallback(() => {
     setModalOpen(false)
@@ -109,6 +117,9 @@ export const TranslationServiceAction = (props: DocumentActionProps): DocumentAc
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'X-Translation-Service-Api-Key': apiKey,
+        'X-Translation-Service-Api-Token': sanityToken,
+        'X-Translation-Service-Sanity': `${pid}:${dataset}`,
       },
       body: JSON.stringify({
         post: doc,

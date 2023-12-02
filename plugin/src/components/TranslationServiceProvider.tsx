@@ -2,11 +2,9 @@ import {useContext} from 'react'
 import {createContext} from 'react'
 import {LayoutProps} from 'sanity'
 
-import {SupportedLanguagesContextProvider} from './SupportedLanguages/hooks/useSupportedLanguages'
+import {SupportedLanguagesContextProvider} from '../hooks'
 import {DEFAULT_CONFIG} from '../const'
-import {TranslationPluginConfig} from '../index'
-
-type PluginConfigContext = Required<TranslationPluginConfig>
+import {PluginConfigContext, TranslationPluginConfig} from '../types'
 
 const TranslationServiceContext = createContext<PluginConfigContext>(DEFAULT_CONFIG)
 

@@ -19,8 +19,13 @@ const baseConfig = {
     }),
     visionTool(),
     sanityPluginTranslation({
+      // Required Configuration
       apiKey: process.env.SANITY_STUDIO_OPENAI_API_KEY as string,
+      sanityToken: '',
       schemaTypes: ['post'],
+      // Optional Configuration
+      sanityApiVersion: '',
+      defaultLanguage: 'en_US',
     }),
   ],
   schema,

@@ -1,7 +1,7 @@
 import {Stack} from '@sanity/ui'
 import {useEffect, useState} from 'react'
 import {FormInput, MemberField} from 'sanity'
-import {useSupportedLanguagesContext} from './SupportedLanguages/hooks/useSupportedLanguages'
+import {useSupportedLanguagesContext} from '../hooks'
 
 export const LocaleField = (props: any) => {
   const {members, id} = props

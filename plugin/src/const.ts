@@ -1,13 +1,10 @@
+import {Locale} from './types'
+
 export const DEFAULT_CONFIG = {
   apiKey: '',
-  apiVersion: new Date().toISOString().split('T')[0],
+  sanityToken: '',
+  sanityApiVersion: new Date().toISOString().split('T')[0],
   schemaTypes: [],
-}
-
-type Locale = {
-  name: string
-  native: string
-  default?: boolean
 }
 
 export const LOCALES: Record<string, Locale> = {
@@ -2914,6 +2911,5 @@ export const ALL_LANGUAGES = Object.keys(LOCALES).map((locale) => {
   return {
     id: locale.replace(/-/g, '_'),
     title: LOCALES[locale].name,
-    isDefault: !!LOCALES[locale].default,
   }
 })
