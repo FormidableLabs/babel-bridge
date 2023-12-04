@@ -5,7 +5,9 @@ const fastify = application();
 
 const start = async () => {
   try {
-    await fastify.listen(PORT);
+    await fastify.listen({
+      port: parseInt(PORT),
+    });
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);
