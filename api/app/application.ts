@@ -1,7 +1,8 @@
 import fastify, { FastifyInstance } from 'fastify';
 import { Server, IncomingMessage, ServerResponse } from 'http';
 import fetch from 'node-fetch';
-import { getLocale } from './util';
+import { checkRequiredParams, findLocaleObjects, getLocale } from './util';
+import { getTranslation } from './lib/ai';
 
 const server: FastifyInstance<Server, IncomingMessage, ServerResponse> =
   fastify({
@@ -9,10 +10,6 @@ const server: FastifyInstance<Server, IncomingMessage, ServerResponse> =
   });
 
 function build() {
-  server.get('/api/ping', () => {
-    return 'pong\n';
-  });
-
   server.get<{
     Querystring: {
       projectId: string;
@@ -39,44 +36,21 @@ function build() {
     '/api/documents/:type',
     {
       preValidation: (request, reply, done) => {
-        const { dataset, projectId } = request.query;
-        const { type } = request.params;
-        if (!type) {
-          reply.code(400).send({
-            statusCode: 400,
-            error: 'Bad Request',
-            message: "'type' is required but missing in the request.",
-          });
-          return done(
-            new Error("'type' is required but missing in the request.")
-          );
+        try {
+          checkRequiredParams(request, reply, [
+            { container: 'params', name: 'type' },
+            { container: 'query', name: 'dataset' },
+            { container: 'query', name: 'projectId' },
+          ]);
+          done();
+        } catch (error) {
+          if (error instanceof Error) done(error);
+          done(new Error('An unexpected error occurred.'));
         }
-        if (!dataset) {
-          reply.code(400).send({
-            statusCode: 400,
-            error: 'Bad Request',
-            message: "'dataset' is required but missing in the request.",
-          });
-          return done(
-            new Error("'dataset' is required but missing in the request.")
-          );
-        }
-        if (!projectId) {
-          reply.code(400).send({
-            statusCode: 400,
-            error: 'Bad Request',
-            message: "'projectId' is required but missing in the request.",
-          });
-          return done(
-            new Error("'projectId' is required but missing in the request.")
-          );
-        }
-        done();
       },
     },
     async (request, reply) => {
       try {
-        const locale = getLocale(request.headers['accept-language']);
         const { dataset, projectId, query } = request.query;
         const { type } = request.params;
 
@@ -86,11 +60,43 @@ function build() {
         const encodedQuery = encodeURIComponent(effectiveQuery);
         const sanityUrl = `https://${projectId}.api.sanity.io/v2021-10-21/data/query/${dataset}?query=${encodedQuery}`;
 
-        const res = await fetch(sanityUrl).then((res) =>
+        const sanityDocument = await fetch(sanityUrl).then((res) =>
           res.json().then((data) => data.result)
         );
 
-        reply.code(200).send(res);
+        const locale = getLocale(request.headers['accept-language']);
+        const localeObjects = findLocaleObjects(sanityDocument);
+        const hasTranslationForLocale = localeObjects.every((localeObject) =>
+          Object.keys(localeObject.data).includes(locale)
+        );
+
+        if (locale.startsWith('en') || hasTranslationForLocale) {
+          return reply.code(200).send(sanityDocument);
+        }
+
+        const contentToTranslate = localeObjects.reduce((acc, localeObject) => {
+          acc[localeObject.key] = {
+            [locale]: localeObject.data['en_US'],
+          };
+          return acc;
+        }, {});
+
+        const translatedContent = await getTranslation(
+          contentToTranslate,
+          locale
+        );
+
+        const translatedDocument = {
+          ...sanityDocument,
+        };
+
+        Object.keys(translatedContent).forEach((key) => {
+          if (translatedDocument.hasOwnProperty(key)) {
+            translatedDocument[key][locale] = translatedContent[key][locale];
+          }
+        });
+
+        reply.code(200).send(translatedDocument);
       } catch (error) {
         request.log.error(error);
         reply.code(500).send({

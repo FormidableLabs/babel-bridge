@@ -1,1 +1,14 @@
+# Dependencies
 /node_modules
+/.pnp
+.pnp.js
+
+# Compiled Sanity Studio
+/dist
+
+# Misc
+.DS_Store
+*.pem
+
+# Dotenv and similar local-only files
+*.local

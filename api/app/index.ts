@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import application from './application';
 
 const PORT: string = process.env.PORT || '3000';
