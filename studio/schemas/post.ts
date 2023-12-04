@@ -2,6 +2,7 @@ import {ConditionalPropertyCallbackContext, defineField, defineType} from 'sanit
 import {ComposeIcon} from '@sanity/icons'
 import {uniqueSlugByLanguage} from '../utils/uniqueSlugByLanguage'
 
+// Inject this into localeTitle and localeBody via plugin
 const isReadOnly = ({parent}: ConditionalPropertyCallbackContext) => {
   const {translationProcessing} = parent || {}
   return translationProcessing
@@ -39,6 +40,13 @@ export default defineType({
       readOnly: isReadOnly,
     }),
     defineField({
+      name: 'localeTest',
+      title: 'Locale Test',
+      type: 'localeTitle',
+      group: 'content',
+      readOnly: isReadOnly,
+    }),
+    defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
@@ -50,6 +58,7 @@ export default defineType({
       group: 'meta',
       validation: (Rule) => Rule.required(),
     }),
+    // Inject this field into the schema via plugin
     defineField({
       name: 'translationProcessing',
       title: 'Translation Processing',

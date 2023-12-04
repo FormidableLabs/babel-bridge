@@ -1,6 +1,7 @@
 import fastify, { FastifyInstance } from 'fastify';
 import { Server, IncomingMessage, ServerResponse } from 'http';
 import fetch from 'node-fetch';
+import { getLocale } from './util';
 
 const server: FastifyInstance<Server, IncomingMessage, ServerResponse> =
   fastify({
@@ -75,11 +76,13 @@ function build() {
     },
     async (request, reply) => {
       try {
+        const locale = getLocale(request.headers['accept-language']);
         const { dataset, projectId, query } = request.query;
         const { type } = request.params;
 
-        // Construct the Sanity URL
-        const effectiveQuery = query ? query : `*[_type == "${type}"]`;
+        const effectiveQuery = query
+          ? `${query} | order(_createdAt desc)[0]`
+          : `*[_type == "${type}"] | order(_createdAt desc)[0]`;
         const encodedQuery = encodeURIComponent(effectiveQuery);
         const sanityUrl = `https://${projectId}.api.sanity.io/v2021-10-21/data/query/${dataset}?query=${encodedQuery}`;
 
