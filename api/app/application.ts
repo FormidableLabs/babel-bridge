@@ -10,6 +10,9 @@ const server: FastifyInstance<Server, IncomingMessage, ServerResponse> =
   });
 
 function build() {
+  // server.post('/api/document-send', async (request, reply) => {
+  //   const payload = request.body;
+  // });
   server.get<{
     Querystring: {
       projectId: string;
@@ -18,6 +21,9 @@ function build() {
     };
     Params: {
       type: string;
+    };
+    Headers: {
+      'Sanity-Access-Token': string;
     };
     Reply: {
       200: any;
@@ -38,6 +44,7 @@ function build() {
       preValidation: (request, reply, done) => {
         try {
           checkRequiredParams(request, reply, [
+            // { container: 'headers', name: 'Sanity-Access-Token' },
             { container: 'params', name: 'type' },
             { container: 'query', name: 'dataset' },
             { container: 'query', name: 'projectId' },
@@ -48,6 +55,20 @@ function build() {
           done(new Error('An unexpected error occurred.'));
         }
       },
+      // onSend: (request, reply, payload, done) => {
+      //   const { dataset, projectId } = request.query;
+      //   fetch('http://localhost:3000/api/document-send', {
+      //     method: 'POST',
+      //     body: JSON.stringify({
+      //       document: payload,
+      //       dataset,
+      //       projectId,
+      //     }),
+      //     headers: { 'Content-Type': 'application/json' },
+      //   });
+      //   done();
+      //   console.log('onSend', payload);
+      // },
     },
     async (request, reply) => {
       try {
