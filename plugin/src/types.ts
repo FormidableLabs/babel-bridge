@@ -5,7 +5,6 @@ export type TranslationPluginConfig = {
   sanityApiVersion?: string
   defaultLanguage?: string
 }
-export type PluginConfigContext = Required<TranslationPluginConfig>
 export type Locale = {
   name: string
   native: string
@@ -21,4 +20,8 @@ export interface Return<V = Value> {
 export type SupportedLanguage = {
   id: string
   title: string
+}
+export type Maybe<T> = T | null
+export type PluginConfigContext = Required<TranslationPluginConfig> & {
+  supportedLanguages: Maybe<SupportedLanguage[]>
 }

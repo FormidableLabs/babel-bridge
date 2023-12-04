@@ -11,11 +11,15 @@ export type UseSupportedLanguages = {
   handleLocaleReset: () => void
 }
 
+export type UseSupportedLanguagesOpts = {
+  defaultLocale: string
+}
+
 const SupportedLanguagesContext = createContext<UseSupportedLanguages | null>(null)
 
-export const useSupportedLanguages = (): UseSupportedLanguages => {
+export const useSupportedLanguages = (opts: UseSupportedLanguagesOpts): UseSupportedLanguages => {
   const {data, error, loading} = useSupportedLanguagesQuery()
-  const [selectedLocale, setSelectedLocale] = useState('')
+  const [selectedLocale, setSelectedLocale] = useState(opts.defaultLocale)
 
   const onLocaleChange = useCallback((locale: string) => {
     setSelectedLocale(locale)
@@ -37,13 +41,16 @@ export const useSupportedLanguages = (): UseSupportedLanguages => {
 
 type SupportedLanguagesContextProviderProps = {
   children: ReactNode
+  defaultLocale: string
 }
 
 export const SupportedLanguagesContextProvider = (
   props: SupportedLanguagesContextProviderProps,
 ) => {
-  const {children} = props
-  const value = useSupportedLanguages()
+  const {children, defaultLocale} = props
+  const value = useSupportedLanguages({
+    defaultLocale,
+  })
 
   return (
     <SupportedLanguagesContext.Provider value={value}>

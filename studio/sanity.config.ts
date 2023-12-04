@@ -25,7 +25,7 @@ const baseConfig = {
       // schemaTypes: ['post'],
       // Optional Configuration
       // sanityApiVersion: '',
-      defaultLanguage: 'en_US',
+      // defaultLanguage: 'en_US',
     }),
   ],
   schema,
