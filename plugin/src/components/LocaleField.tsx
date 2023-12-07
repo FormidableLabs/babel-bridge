@@ -1,7 +1,7 @@
 import {Stack} from '@sanity/ui'
 import {useEffect, useState} from 'react'
 import {FormInput, MemberField} from 'sanity'
-import {useSupportedLanguagesContext} from './SupportedLanguages/hooks/useSupportedLanguages'
+import {useSupportedLanguagesContext} from '../hooks'
 
 export const LocaleField = (props: any) => {
   const {members, id} = props
@@ -18,15 +18,15 @@ export const LocaleField = (props: any) => {
             return member.name === d.id
           })
         })
-      return setSupportedLanguages(result)
+      setSupportedLanguages(result)
     }
   }, [members, supportedLanguageDocuments])
 
-  const supportedLanguageFields = !selectedLocale
-    ? supportedLanguages
-    : supportedLanguages.filter((languageField) => {
+  const supportedLanguageFields = selectedLocale
+    ? supportedLanguages.filter((languageField) => {
         return languageField.key === `field-${selectedLocale}`
       })
+    : supportedLanguages
 
   return (
     <Stack space={2}>
