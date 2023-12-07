@@ -49,17 +49,17 @@ export const structure: StructureResolver = (S) =>
             .schemaType('category')
             .filter('_type == "category"'),
         ),
-      S.listItem()
-        .title('Languages')
-        .schemaType('supportedLanguages')
-        .child(
-          S.documentList()
-            .apiVersion('v2023-08-01')
-            .id('all-languages')
-            .title('All Languages')
-            .schemaType('supportedLanguages')
-            .filter('_type == "supportedLanguages"'),
-        ),
+      // S.listItem()
+      //   .title('Languages')
+      //   .schemaType('supportedLanguages')
+      //   .child(
+      //     S.documentList()
+      //       .apiVersion('v2023-08-01')
+      //       .id('all-languages')
+      //       .title('All Languages')
+      //       .schemaType('supportedLanguages')
+      //       .filter('_type == "supportedLanguages"'),
+      //   ),
       // S.listItem()
       //   .title('Translation Plugin')
       //   .id('trnslation-plugin')

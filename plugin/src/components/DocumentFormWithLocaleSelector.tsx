@@ -3,7 +3,7 @@ import {RefreshIcon} from '@sanity/icons'
 import {Box, Button, Flex, Inline, Select, Stack} from '@sanity/ui'
 import {ChangeEvent, useCallback} from 'react'
 import {ObjectInputProps, useFormValue} from 'sanity'
-import {useSupportedLanguagesContext} from './SupportedLanguages/hooks/useSupportedLanguages'
+import {useSupportedLanguagesContext} from '../hooks'
 import {LOCALES} from '../const'
 import {useTranslationServiceContext} from './TranslationServiceProvider'
 
@@ -68,7 +68,7 @@ const RootComponentInput = (props: ObjectInputProps) => {
   )
 }
 
-export const SanityDocumentInputComponent = (props: ObjectInputProps) => {
+export const DocumentFormWithLocaleSelector = (props: ObjectInputProps) => {
   const {schemaTypes} = useTranslationServiceContext()
   const documentType = useFormValue(['_type']) as string
   const inputId = props.id

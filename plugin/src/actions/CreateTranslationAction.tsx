@@ -1,7 +1,13 @@
 import localeEmoji from 'locale-emoji'
 import {TranslateIcon, TransferIcon, CloseCircleIcon} from '@sanity/icons'
 import {ChangeEvent, useCallback, useState} from 'react'
-import {DocumentActionDescription, DocumentActionProps, useClient} from 'sanity'
+import {
+  DocumentActionDescription,
+  DocumentActionProps,
+  useClient,
+  useDataset,
+  useProject,
+} from 'sanity'
 import {Flex, Inline, Button, Stack, Select, Text, Badge, useToast} from '@sanity/ui'
 import {LOCALES} from '../const'
 import {usePostLocalesQuery} from '../hooks/usePostLocalesQuery'
@@ -82,8 +88,8 @@ const ModalContent = (props: ModalContentProps) => {
   )
 }
 
-export const TranslationServiceAction = (props: DocumentActionProps): DocumentActionDescription => {
-  const {apiVersion} = useTranslationServiceContext()
+export const CreateTranslationAction = (props: DocumentActionProps): DocumentActionDescription => {
+  const {sanityApiVersion, apiKey, sanityToken} = useTranslationServiceContext()
   const {id, published, draft} = props
   const doc = draft || published
   const toast = useToast()
@@ -91,8 +97,10 @@ export const TranslationServiceAction = (props: DocumentActionProps): DocumentAc
   const [locale, setLocale] = useState('')
   const {data, loading, error} = usePostLocalesQuery({postId: id})
   const client = useClient({
-    apiVersion,
+    apiVersion: sanityApiVersion,
   })
+  const pid = useProject()
+  const dataset = useDataset()
 
   const onClose = useCallback(() => {
     setModalOpen(false)
@@ -109,6 +117,9 @@ export const TranslationServiceAction = (props: DocumentActionProps): DocumentAc
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'X-Translation-Service-Api-Key': apiKey,
+        'X-Translation-Service-Api-Token': sanityToken,
+        'X-Translation-Service-Sanity': `${pid}:${dataset}`,
       },
       body: JSON.stringify({
         post: doc,
@@ -131,14 +142,14 @@ export const TranslationServiceAction = (props: DocumentActionProps): DocumentAc
         closable: true,
         status: 'success',
         title: 'Translation Started!',
-        description: 'Your document is being translated. You will be notified when it is complete.',
+        description: 'Your fields are being translated. You will be notified when it is complete.',
       })
     } catch (err) {
       toast.push({
         closable: true,
         status: 'error',
         title: 'Error',
-        description: 'There was an error translating this document. Please try again.',
+        description: 'There was an error translating some fields. Please try again.',
       })
     }
   }
@@ -149,14 +160,14 @@ export const TranslationServiceAction = (props: DocumentActionProps): DocumentAc
   return {
     disabled,
     icon: TranslateIcon,
-    label: 'Translate',
+    label: 'Create Translation',
     tone: 'primary',
     onHandle: () => {
       setModalOpen(true)
     },
     dialog: modalOpen && {
       type: 'dialog',
-      header: 'Translate Document',
+      header: 'Translate Fields',
       content: (
         <ModalContent locales={locales} handleLocaleChange={onLocaleChange} disabled={!!error} />
       ),

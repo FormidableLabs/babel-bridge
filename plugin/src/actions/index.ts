@@ -1,1 +1,1 @@
-export * from './TranslationServiceAction'
+export * from './CreateTranslationAction'
