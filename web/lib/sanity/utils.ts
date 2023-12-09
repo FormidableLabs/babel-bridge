@@ -9,7 +9,6 @@ export async function createSupportedLanguageIfNeeded(locale: string) {
       _type: 'supportedLanguages',
       title: locale,
       id: locale,
-      default: false,
     });
   }
 }

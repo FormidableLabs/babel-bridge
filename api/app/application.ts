@@ -1,7 +1,12 @@
 import fastify, { FastifyInstance } from 'fastify';
 import { Server, IncomingMessage, ServerResponse } from 'http';
 import fetch from 'node-fetch';
-import { checkRequiredParams, findLocaleObjects, getLocale } from './util';
+import {
+  afterHandle,
+  checkRequiredParams,
+  findLocaleObjects,
+  getLocale,
+} from './util';
 import { getTranslation } from './lib/ai';
 
 const server: FastifyInstance<Server, IncomingMessage, ServerResponse> =
@@ -10,9 +15,6 @@ const server: FastifyInstance<Server, IncomingMessage, ServerResponse> =
   });
 
 function build() {
-  // server.post('/api/document-send', async (request, reply) => {
-  //   const payload = request.body;
-  // });
   server.get<{
     Querystring: {
       projectId: string;
@@ -44,7 +46,7 @@ function build() {
       preValidation: (request, reply, done) => {
         try {
           checkRequiredParams(request, reply, [
-            // { container: 'headers', name: 'Sanity-Access-Token' },
+            { container: 'headers', name: 'sanity-access-token' },
             { container: 'params', name: 'type' },
             { container: 'query', name: 'dataset' },
             { container: 'query', name: 'projectId' },
@@ -55,20 +57,6 @@ function build() {
           done(new Error('An unexpected error occurred.'));
         }
       },
-      // onSend: (request, reply, payload, done) => {
-      //   const { dataset, projectId } = request.query;
-      //   fetch('http://localhost:3000/api/document-send', {
-      //     method: 'POST',
-      //     body: JSON.stringify({
-      //       document: payload,
-      //       dataset,
-      //       projectId,
-      //     }),
-      //     headers: { 'Content-Type': 'application/json' },
-      //   });
-      //   done();
-      //   console.log('onSend', payload);
-      // },
     },
     async (request, reply) => {
       try {
@@ -92,7 +80,7 @@ function build() {
         );
 
         if (locale.startsWith('en') || hasTranslationForLocale) {
-          return reply.code(200).send(sanityDocument);
+          return reply.code(200).send(localeObjects);
         }
 
         const contentToTranslate = localeObjects.reduce((acc, localeObject) => {
@@ -117,6 +105,14 @@ function build() {
           }
         });
 
+        afterHandle({
+          sanityToken: request.headers['sanity-access-token'],
+          query: request.query,
+          payload: {
+            document: translatedDocument,
+            locale,
+          },
+        });
         reply.code(200).send(translatedDocument);
       } catch (error) {
         request.log.error(error);
