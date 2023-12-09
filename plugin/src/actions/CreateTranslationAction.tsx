@@ -113,16 +113,15 @@ export const CreateTranslationAction = (props: DocumentActionProps): DocumentAct
   }, [])
 
   const sendTranslation = (value: string) => {
-    return fetch('http://localhost:3000/translate', {
+    return fetch(`http://localhost:3000/api/translate?dataset=${dataset}&projectId=${pid}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Translation-Service-Api-Key': apiKey,
-        'X-Translation-Service-Api-Token': sanityToken,
-        'X-Translation-Service-Sanity': `${pid}:${dataset}`,
+        'sanity-access-token': sanityToken,
+        'open-ai-api-key': apiKey,
       },
       body: JSON.stringify({
-        post: doc,
+        document: doc,
         locale: value,
       }),
     })

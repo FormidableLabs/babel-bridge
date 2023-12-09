@@ -15,6 +15,102 @@ const server: FastifyInstance<Server, IncomingMessage, ServerResponse> =
   });
 
 function build() {
+  server.post<{
+    Headers: {
+      'Sanity-Access-Token': string;
+      'Open-Ai-Api-Key': string;
+    };
+    Querystring: {
+      projectId: string;
+      dataset: string;
+    };
+    Body: {
+      document: any;
+      locale: string;
+    };
+    Reply: {
+      200: any;
+      400: {
+        statusCode: number;
+        error: string;
+        message: string;
+      };
+      500: {
+        statusCode: number;
+        error: string;
+        message: string;
+      };
+    };
+  }>(
+    '/api/translate',
+    {
+      preValidation: (request, reply, done) => {
+        try {
+          checkRequiredParams(request, reply, [
+            { container: 'headers', name: 'sanity-access-token' },
+            { container: 'headers', name: 'open-ai-api-key' },
+            { container: 'body', name: 'document' },
+            { container: 'body', name: 'locale' },
+          ]);
+          done();
+        } catch (error) {
+          if (error instanceof Error) done(error);
+          done(new Error('An unexpected error occurred.'));
+        }
+      },
+    },
+    async (request, reply) => {
+      try {
+        const { document, locale } = request.body;
+
+        const localeObjects = findLocaleObjects(document);
+
+        const contentToTranslate = localeObjects.reduce((acc, localeObject) => {
+          acc[localeObject.key] = {
+            [locale]: localeObject.data['en_US'],
+          };
+          return acc;
+        }, {});
+
+        const translatedContent = await getTranslation({
+          payload: {
+            data: contentToTranslate,
+            locale,
+          },
+          aiConfig: {
+            apiKey: request.headers['open-ai-api-key'],
+          },
+        });
+
+        const translatedDocument = {
+          ...document,
+        };
+
+        Object.keys(translatedContent).forEach((key) => {
+          if (translatedDocument.hasOwnProperty(key)) {
+            translatedDocument[key][locale] = translatedContent[key][locale];
+          }
+        });
+
+        afterHandle({
+          sanityToken: request.headers['sanity-access-token'],
+          query: request.query,
+          payload: {
+            document: translatedDocument,
+            locale,
+          },
+        });
+        reply.code(200).send(translatedDocument);
+      } catch (error) {
+        request.log.error(error);
+        reply.code(500).send({
+          statusCode: 500,
+          error: 'Internal Server Error',
+          message: 'An unexpected error occurred.',
+        });
+      }
+    }
+  );
   server.get<{
     Querystring: {
       projectId: string;
@@ -26,6 +122,7 @@ function build() {
     };
     Headers: {
       'Sanity-Access-Token': string;
+      'Open-Ai-Api-Key': string;
     };
     Reply: {
       200: any;
@@ -47,6 +144,7 @@ function build() {
         try {
           checkRequiredParams(request, reply, [
             { container: 'headers', name: 'sanity-access-token' },
+            { container: 'headers', name: 'open-ai-api-key' },
             { container: 'params', name: 'type' },
             { container: 'query', name: 'dataset' },
             { container: 'query', name: 'projectId' },
@@ -90,10 +188,15 @@ function build() {
           return acc;
         }, {});
 
-        const translatedContent = await getTranslation(
-          contentToTranslate,
-          locale
-        );
+        const translatedContent = await getTranslation({
+          payload: {
+            data: contentToTranslate,
+            locale,
+          },
+          aiConfig: {
+            apiKey: request.headers['open-ai-api-key'],
+          },
+        });
 
         const translatedDocument = {
           ...sanityDocument,
