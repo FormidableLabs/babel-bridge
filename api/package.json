@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fastify/rate-limit": "^9.0.1",
     "dotenv": "^16.3.1",
     "fastify": "^4.24.3",
     "node-fetch": "^2.7.0",
