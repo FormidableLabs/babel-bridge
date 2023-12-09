@@ -25,7 +25,7 @@ export function sanityDocumentRoutes(server: FastifyInstance) {
     Params: Params;
     Reply: RouteReply;
   }>(
-    '/api/documents/:type',
+    '/api/document/:type',
     {
       preValidation: (request, reply, done) => {
         try {
@@ -49,8 +49,8 @@ export function sanityDocumentRoutes(server: FastifyInstance) {
         const { type } = request.params;
 
         const effectiveQuery = query
-          ? `${query} | order(_createdAt desc)[0]`
-          : `*[_type == "${type}"] | order(_createdAt desc)[0]`;
+          ? `${query} [0]`
+          : `*[_type == "${type}"] [0]`;
         const encodedQuery = encodeURIComponent(effectiveQuery);
         const sanityUrl = `https://${projectId}.api.sanity.io/v2021-10-21/data/query/${dataset}?query=${encodedQuery}`;
 

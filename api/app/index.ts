@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import application from './application';
 
-const PORT: string = process.env.PORT || '3000';
+const PORT: string = process.env.PORT || '3001';
 const fastify = application();
 
 const start = async () => {
