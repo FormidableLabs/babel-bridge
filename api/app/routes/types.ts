@@ -12,3 +12,7 @@ export type RouteReply = {
   400: RouteError;
   500: RouteError;
 };
+export type RouteQueryString = {
+  projectId: string;
+  dataset: string;
+};

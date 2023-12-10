@@ -45,7 +45,7 @@ export const sanityPluginTranslation = definePlugin<TranslationPluginConfig | vo
       document: {
         actions: (prev, context) => {
           // @ts-ignore
-          if (schemaTypes.includes(context.schemaType)) {
+          if (pluginConfig.schemaTypes.includes(context.schemaType)) {
             return [...prev, CreateTranslationAction]
           }
           return prev

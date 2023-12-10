@@ -60,9 +60,4 @@ export const structure: StructureResolver = (S) =>
       //       .schemaType('supportedLanguages')
       //       .filter('_type == "supportedLanguages"'),
       //   ),
-      // S.listItem()
-      //   .title('Translation Plugin')
-      //   .id('trnslation-plugin')
-      //   .child(S.document().schemaType('translationPlugin').documentId('translationPlugin'))
-      //   .icon(RocketIcon),
     ])

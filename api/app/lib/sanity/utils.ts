@@ -1,3 +1,4 @@
+import { getClientFromPool } from '../../util';
 import { createLanguage } from './mutations';
 import { getLanguage } from './queries';
 
@@ -41,8 +42,13 @@ export async function checkLanguageSupport({
   sanityToken,
 }) {
   const language = await getLanguage({
-    dataset,
-    projectId,
+    sanityConfig: {
+      dataset,
+      projectId,
+    },
+    payload: {
+      locale,
+    },
   });
   if (!language) {
     await createLanguage({

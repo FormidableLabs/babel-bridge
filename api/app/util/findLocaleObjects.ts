@@ -23,8 +23,9 @@ export function findLocaleObjects(data: Result): LocaleObjectWithKey[] {
       result.push({ key, data: item });
     } else if (typeof item === 'object' && item !== null) {
       if (item._type === 'localeTitle' || item._type === 'localeBody') {
-        delete item._type;
-        result.push({ key, data: item });
+        const copy = { ...item };
+        delete copy._type;
+        result.push({ key, data: copy });
       }
     }
   });

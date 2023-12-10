@@ -1,5 +1,10 @@
 import { getTranslation } from '../lib/ai';
-import { afterHandle, checkRequiredParams, findLocaleObjects } from '../util';
+import {
+  afterHandle,
+  checkRequiredParams,
+  findLocaleObjects,
+  handleTranslation,
+} from '../util';
 import { FastifyInstance } from 'fastify';
 import { RouteHeaders, RouteReply } from './types';
 
@@ -40,37 +45,12 @@ export function translateRoutes(server: FastifyInstance) {
     async (request, reply) => {
       try {
         const { document, locale } = request.body;
-
-        const localeObjects = findLocaleObjects(document);
-
-        const contentToTranslate = localeObjects.reduce((acc, localeObject) => {
-          acc[localeObject.key] = {
-            [locale]: localeObject.data['en_US'],
-          };
-          return acc;
-        }, {});
-
-        const translatedContent = await getTranslation({
-          payload: {
-            data: contentToTranslate,
-            locale,
-          },
-          aiConfig: {
-            apiKey: request.headers['open-ai-api-key'],
-          },
+        const translatedDocument = await handleTranslation({
+          document,
+          locale,
+          aiConfig: { apiKey: request.headers['open-ai-api-key'] },
         });
-
-        const translatedDocument = {
-          ...document,
-        };
-
-        Object.keys(translatedContent).forEach((key) => {
-          if (translatedDocument.hasOwnProperty(key)) {
-            translatedDocument[key][locale] = translatedContent[key][locale];
-          }
-        });
-
-        afterHandle({
+        await afterHandle({
           sanityToken: request.headers['sanity-access-token'],
           query: request.query,
           payload: {

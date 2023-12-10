@@ -1,16 +1,14 @@
 import {
   afterHandle,
   checkRequiredParams,
-  findLocaleObjects,
+  getClientFromPool,
   getLocale,
+  handleTranslation,
 } from '../util';
-import { getTranslation } from '../lib/ai';
 import { FastifyInstance } from 'fastify';
-import { RouteReply, RouteHeaders } from './types';
+import { RouteReply, RouteHeaders, RouteQueryString } from './types';
 
-type Querystring = {
-  projectId: string;
-  dataset: string;
+type Querystring = RouteQueryString & {
   query?: string;
 };
 
@@ -45,54 +43,23 @@ export function sanityDocumentRoutes(server: FastifyInstance) {
     },
     async (request, reply) => {
       try {
-        const { dataset, projectId, query } = request.query;
+        const { query } = request.query;
         const { type } = request.params;
+        const sanityClient = getClientFromPool({
+          token: request.headers['sanity-access-token'],
+          dataset: request.query.dataset,
+          projectId: request.query.projectId,
+        });
 
-        const effectiveQuery = query
-          ? `${query} [0]`
-          : `*[_type == "${type}"] [0]`;
-        const encodedQuery = encodeURIComponent(effectiveQuery);
-        const sanityUrl = `https://${projectId}.api.sanity.io/v2021-10-21/data/query/${dataset}?query=${encodedQuery}`;
-
-        const sanityDocument = await fetch(sanityUrl).then((res) =>
-          res.json().then((data) => data.result)
+        const sanityDocument = await sanityClient.fetch(
+          query ? `${query} [0]` : `*[_type == "${type}"] [0]`
         );
 
         const locale = getLocale(request.headers['accept-language']);
-        const localeObjects = findLocaleObjects(sanityDocument);
-        const hasTranslationForLocale = localeObjects.every((localeObject) =>
-          Object.keys(localeObject.data).includes(locale)
-        );
-
-        if (locale.startsWith('en') || hasTranslationForLocale) {
-          return reply.code(200).send(localeObjects);
-        }
-
-        const contentToTranslate = localeObjects.reduce((acc, localeObject) => {
-          acc[localeObject.key] = {
-            [locale]: localeObject.data['en_US'],
-          };
-          return acc;
-        }, {});
-
-        const translatedContent = await getTranslation({
-          payload: {
-            data: contentToTranslate,
-            locale,
-          },
-          aiConfig: {
-            apiKey: request.headers['open-ai-api-key'],
-          },
-        });
-
-        const translatedDocument = {
-          ...sanityDocument,
-        };
-
-        Object.keys(translatedContent).forEach((key) => {
-          if (translatedDocument.hasOwnProperty(key)) {
-            translatedDocument[key][locale] = translatedContent[key][locale];
-          }
+        const translatedDocument = await handleTranslation({
+          document: sanityDocument,
+          locale,
+          aiConfig: { apiKey: request.headers['open-ai-api-key'] },
         });
 
         afterHandle({

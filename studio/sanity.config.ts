@@ -20,8 +20,8 @@ const baseConfig = {
     visionTool(),
     sanityPluginTranslation({
       // Required Configuration
-      apiKey: 'some key here',
-      sanityToken: 'some token here',
+      apiKey: 'OPENAI_API_KEY',
+      sanityToken: 'SANITY_STUDIO_TOKEN',
       schemaTypes: ['post'],
       // Optional Configuration
       // sanityApiVersion: '',
