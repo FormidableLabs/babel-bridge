@@ -16,7 +16,16 @@ export async function afterHandle(opts: AfterHandleOpts) {
   const { dataset, projectId } = query;
   const { document, locale } = payload;
 
-  await checkLanguageSupport({ projectId, dataset, locale, sanityToken });
+  await checkLanguageSupport({
+    sanityConfig: {
+      projectId,
+      dataset,
+      token: sanityToken,
+    },
+    payload: {
+      locale,
+    },
+  });
 
   const localeFieldKeys = findLocaleObjects(document).map((obj) => obj.key);
 

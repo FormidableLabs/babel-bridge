@@ -1,5 +1,5 @@
 {
-  "name": "sanity-plugin-translation",
+  "name": "babel-bridge",
   "version": "1.0.0",
   "description": "on the fly translations using ai",
   "keywords": [

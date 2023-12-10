@@ -1,13 +1,7 @@
 import localeEmoji from 'locale-emoji'
 import {TranslateIcon, TransferIcon, CloseCircleIcon} from '@sanity/icons'
 import {ChangeEvent, useCallback, useState} from 'react'
-import {
-  DocumentActionDescription,
-  DocumentActionProps,
-  useClient,
-  useDataset,
-  useProject,
-} from 'sanity'
+import {DocumentActionDescription, DocumentActionProps, useDataset, useProject} from 'sanity'
 import {Flex, Inline, Button, Stack, Select, Text, Badge, useToast} from '@sanity/ui'
 import {LOCALES} from '../const'
 import {usePostLocalesQuery} from '../hooks/usePostLocalesQuery'
@@ -89,16 +83,13 @@ const ModalContent = (props: ModalContentProps) => {
 }
 
 export const CreateTranslationAction = (props: DocumentActionProps): DocumentActionDescription => {
-  const {sanityApiVersion, apiKey, sanityToken} = useTranslationServiceContext()
+  const {apiKey, sanityToken} = useTranslationServiceContext()
   const {id, published, draft} = props
   const doc = draft || published
   const toast = useToast()
   const [modalOpen, setModalOpen] = useState(false)
   const [locale, setLocale] = useState('')
   const {data, loading, error} = usePostLocalesQuery({postId: id})
-  const client = useClient({
-    apiVersion: sanityApiVersion,
-  })
   const pid = useProject()
   const dataset = useDataset()
 
@@ -113,7 +104,7 @@ export const CreateTranslationAction = (props: DocumentActionProps): DocumentAct
   }, [])
 
   const sendTranslation = (value: string) => {
-    return fetch(`http://localhost:3000/api/translate?dataset=${dataset}&projectId=${pid}`, {
+    return fetch(`http://localhost:3001/api/translate?dataset=${dataset}&projectId=${pid}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -129,12 +120,6 @@ export const CreateTranslationAction = (props: DocumentActionProps): DocumentAct
 
   const onTranslate = async () => {
     try {
-      await client
-        .patch(doc!._id)
-        .set({
-          translationProcessing: true,
-        })
-        .commit()
       sendTranslation(locale)
       onClose()
       toast.push({

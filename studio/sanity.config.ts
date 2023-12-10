@@ -1,18 +1,15 @@
-import {defineConfig, SchemaPluginOptions} from 'sanity'
+import {defineConfig} from 'sanity'
 import {deskTool} from 'sanity/desk'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemas'
 import {structure} from './structure'
-import {defaultTemplates} from './schemas/config/defaultTemplates'
-import {sanityPluginTranslation} from 'sanity-plugin-translation'
-
-const schema: SchemaPluginOptions = {
-  types: schemaTypes,
-  templates: (prev) => [...defaultTemplates, ...prev],
-}
+import {sanityPluginTranslation} from 'babel-bridge'
 
 const baseConfig = {
   projectId: 'hakfgcdn',
+  schema: {
+    types: schemaTypes,
+  },
   plugins: [
     deskTool({
       structure,
@@ -28,7 +25,6 @@ const baseConfig = {
       defaultLanguage: 'en_US',
     }),
   ],
-  schema,
 }
 
 export default defineConfig([

@@ -1,10 +1,4 @@
-import { getTranslation } from '../lib/ai';
-import {
-  afterHandle,
-  checkRequiredParams,
-  findLocaleObjects,
-  handleTranslation,
-} from '../util';
+import { afterHandle, checkRequiredParams, handleTranslation } from '../util';
 import { FastifyInstance } from 'fastify';
 import { RouteHeaders, RouteReply } from './types';
 

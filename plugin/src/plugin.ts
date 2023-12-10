@@ -36,7 +36,7 @@ export const sanityPluginTranslation = definePlugin<TranslationPluginConfig | vo
     }
 
     return {
-      name: 'sanity-plugin-translation',
+      name: 'babel-bridge',
       studio: {
         components: {
           layout: (props) => TranslationServiceProvider({...props, pluginConfig}),

@@ -1,4 +1,5 @@
 import { getClientFromPool } from '../../util';
+import { Language } from './queries';
 
 type CreateLanguageOpts = {
   payload: {
@@ -11,26 +12,25 @@ type CreateLanguageOpts = {
   };
 };
 
-export const createLanguage = async (opts: CreateLanguageOpts) => {
+export const createLanguage = async (
+  opts: CreateLanguageOpts
+): Promise<Language | null> => {
   const { sanityConfig, payload } = opts;
   const sanityClient = getClientFromPool({
     projectId: sanityConfig.projectId,
     dataset: sanityConfig.dataset,
-  });
-  return sanityClient
-    .create({
+  }).withConfig({ token: sanityConfig.token });
+
+  try {
+    return sanityClient.create({
       _type: 'supportedLanguages',
       title: payload.locale,
       id: payload.locale,
-    })
-    .then((res) => {
-      console.log(`Language ${payload.locale} created`);
-      return res;
-    })
-    .catch((err) => {
-      console.error(err);
-      return null;
     });
+  } catch (error) {
+    console.error('Error creating language:', error);
+    return null;
+  }
 };
 
 type PatchLocaleFieldsOpts = {
@@ -51,17 +51,21 @@ export async function patchLocaleFields(opts: PatchLocaleFieldsOpts) {
   const sanityClient = getClientFromPool({
     projectId: sanityConfig.projectId,
     dataset: sanityConfig.dataset,
-  });
-  const trx = sanityClient.transaction();
-  payload.keys.forEach((key) => {
-    trx.patch(payload.document._id, (patch) =>
-      patch.set({
-        [key]: {
-          ...payload.document[key],
-          // [payload.locale]: payload.document[key][payload.locale],
-        },
-      })
-    );
-  });
-  await trx.commit();
+    token: sanityConfig.token,
+  }).withConfig({ token: sanityConfig.token });
+
+  try {
+    const patch = {};
+    payload.keys.forEach((key) => {
+      patch[key] = {
+        ...payload.document[key],
+        [payload.locale]: payload.document[key][payload.locale],
+      };
+    });
+    const documentId = payload.document._id.replace('drafts.', '');
+    return sanityClient.patch(documentId).set(patch).commit();
+  } catch (error) {
+    console.error('Error patching locale fields:', error);
+    return null;
+  }
 }
