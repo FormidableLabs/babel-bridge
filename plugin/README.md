@@ -1,11 +1,11 @@
-# sanity-plugin-translation
+# babel-bridge
 
 > This is a **Sanity Studio v3** plugin.
 
 ## Installation
 
 ```sh
-npm install sanity-plugin-translation
+npm install babel-bridge
 ```
 
 ## Usage
@@ -14,7 +14,7 @@ Add it as a plugin in `sanity.config.ts` (or .js):
 
 ```ts
 import {defineConfig} from 'sanity'
-import {myPlugin} from 'sanity-plugin-translation'
+import {myPlugin} from 'babel-bridge'
 
 export default defineConfig({
   //...

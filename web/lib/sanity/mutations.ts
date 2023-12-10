@@ -4,7 +4,6 @@ export const createSupportedLanguage = async (data: {
   _type: string;
   id: string;
   title: string;
-  default: boolean;
 }) => {
   return client
     .create(data)

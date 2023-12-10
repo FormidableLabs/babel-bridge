@@ -14,6 +14,9 @@ dependencies:
   '@sanity/vision':
     specifier: ^3.16.4
     version: 3.16.4(@babel/runtime@7.22.15)(@codemirror/lint@6.4.1)(@codemirror/state@6.2.1)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.0.4)(codemirror@6.0.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11)
+  babel-bridge:
+    specifier: file:.yalc/babel-bridge
+    version: file:.yalc/babel-bridge(@babel/core@7.22.15)(react-dom@18.2.0)(react-fast-compare@3.2.2)(react-is@18.2.0)(react@18.2.0)(rxjs@7.8.1)(sanity@3.16.4)(styled-components@5.3.11)
   locale-emoji:
     specifier: ^0.3.0
     version: 0.3.0
@@ -29,9 +32,6 @@ dependencies:
   sanity:
     specifier: ^3.16.4
     version: 3.16.4(@types/react@18.2.21)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.3.11)
-  sanity-plugin-translation:
-    specifier: file:.yalc/sanity-plugin-translation
-    version: file:.yalc/sanity-plugin-translation(@babel/core@7.22.15)(react-dom@18.2.0)(react-fast-compare@3.2.2)(react-is@18.2.0)(react@18.2.0)(rxjs@7.8.1)(sanity@3.16.4)(styled-components@5.3.11)
   sanity-plugin-utils:
     specifier: ^1.6.2
     version: 1.6.2(@babel/core@7.22.15)(@sanity/ui@1.8.2)(react-dom@18.2.0)(react-fast-compare@3.2.2)(react-is@18.2.0)(react@18.2.0)(rxjs@7.8.1)(sanity@3.16.4)
@@ -2107,8 +2107,8 @@ packages:
       - supports-color
     dev: false
 
-  /@sanity/client@6.8.6:
-    resolution: {integrity: sha512-Va4KZ4mRnyIbV+61VIJ+Op/amNAwWTo/ET3egtnEqPuXYLg60VWffNoAtAjuaZ5qM9BpTOCGJZjTKCHq+/5CEw==}
+  /@sanity/client@6.9.3:
+    resolution: {integrity: sha512-ba8fHqsncuuPNCGs5qTynpQqWdyeQzXmPQ6UzaNCn4/JNKmoucrdSNfCijE+3CsA23OJpZe51RqkF9JRvOpkdw==}
     engines: {node: '>=14.18'}
     dependencies:
       '@sanity/eventsource': 5.0.0
@@ -6911,16 +6911,16 @@ packages:
       readable-stream: 3.6.2
     dev: false
 
-  file:.yalc/sanity-plugin-translation(@babel/core@7.22.15)(react-dom@18.2.0)(react-fast-compare@3.2.2)(react-is@18.2.0)(react@18.2.0)(rxjs@7.8.1)(sanity@3.16.4)(styled-components@5.3.11):
-    resolution: {directory: .yalc/sanity-plugin-translation, type: directory}
-    id: file:.yalc/sanity-plugin-translation
-    name: sanity-plugin-translation
+  file:.yalc/babel-bridge(@babel/core@7.22.15)(react-dom@18.2.0)(react-fast-compare@3.2.2)(react-is@18.2.0)(react@18.2.0)(rxjs@7.8.1)(sanity@3.16.4)(styled-components@5.3.11):
+    resolution: {directory: .yalc/babel-bridge, type: directory}
+    id: file:.yalc/babel-bridge
+    name: babel-bridge
     engines: {node: '>=14'}
     peerDependencies:
       react: ^18
       sanity: ^3
     dependencies:
-      '@sanity/client': 6.8.6
+      '@sanity/client': 6.9.3
       '@sanity/icons': 2.7.0(react@18.2.0)
       '@sanity/incompatible-plugin': 1.0.4(react-dom@18.2.0)(react@18.2.0)
       '@sanity/ui': 1.9.3(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@5.3.11)

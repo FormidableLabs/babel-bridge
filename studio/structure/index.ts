@@ -1,11 +1,5 @@
 import {StructureResolver} from 'sanity/desk'
 
-const defaultLanguage = {
-  id: 'en-US',
-  title: 'English (US)',
-  default: true,
-}
-
 export const structure: StructureResolver = (S) =>
   S.list()
     .title('Content')
@@ -18,14 +12,7 @@ export const structure: StructureResolver = (S) =>
             .apiVersion('v2023-08-01')
             .title('All Posts')
             .schemaType('post')
-            .filter('_type == "post"')
-            .initialValueTemplates([
-              S.initialValueTemplateItem('post-by-language', {
-                language: defaultLanguage?.id,
-                localeTitle: {},
-                localeBody: {},
-              }),
-            ]),
+            .filter('_type == "post"'),
         ),
       S.listItem()
         .title('Authors')
@@ -60,9 +47,4 @@ export const structure: StructureResolver = (S) =>
       //       .schemaType('supportedLanguages')
       //       .filter('_type == "supportedLanguages"'),
       //   ),
-      // S.listItem()
-      //   .title('Translation Plugin')
-      //   .id('trnslation-plugin')
-      //   .child(S.document().schemaType('translationPlugin').documentId('translationPlugin'))
-      //   .icon(RocketIcon),
     ])
