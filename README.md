@@ -58,8 +58,8 @@ The application follows a simple structure, comprising the following parts:
 
 1. Clone the repository
 1. Install dependencies
-   1. Web _(see [web/README.md](./web/README.md))_
-   1. Studio _(see [studio/README.md](./studio/README.md))_
+   1. Web _(see [apps/web/README.md](./apps/web/README.md))_
+   1. Studio _(see [apps/studio/README.md](./apps/studio/README.md))_
 1. Run the layers you need:
    1. Web (`cd web && pnpm dev`): http://localhost:3000
    1. Studio (`cd studio && pnpm dev`): http://localhost:3333
